@@ -313,3 +313,45 @@ table.tbl .law { color: var(--text-3); font-size: 12px; }
   .hero h1 { font-size: 23px; }
   .chapter-grid { grid-template-columns: 1fr; }
 }
+
+/* ── 移动端适配增强（手机浏览习惯） ── */
+@media (max-width: 900px) {
+  /* 折叠菜单层级与可点性 */
+  .topnav.open { z-index: 300; box-shadow: 0 10px 28px rgba(0,0,0,.3); border-radius: 0 0 12px 12px; }
+  .topnav.open a { display: block; padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,.08); border-radius: 0; font-size: 15px; }
+  .topnav.open a:last-child { border-bottom: none; }
+  .menu-btn { padding: 8px 12px; font-size: 24px; line-height: 1; }
+  .brand .logo { width: 30px; height: 30px; font-size: 14px; border-radius: 8px; }
+  .brand .name { font-size: 13.5px; letter-spacing: 0; }
+  .brand .name small { font-size: 9px; letter-spacing: 1px; }
+  .topbar-inner { padding: 0 12px; }
+  /* 表格横向滚动（防溢出错位） */
+  table.tbl, table.rule, table.matrix, table.rep, table.tpl, table.case-index, table.risk-map, table.prov-table, .law-body table {
+    display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap;
+  }
+  table.tbl th, table.rule th, table.matrix th, table.rep th, table.tpl th, table.case-index th, table.risk-map th, table.prov-table th { white-space: nowrap; }
+  /* 代码/文书模板防溢出 */
+  pre { overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: pre-wrap; word-break: break-all; }
+  /* 内容容器内边距统一 */
+  .wrap, .guide-wrap, .risk-wrap, .tpl-wrap, .law-page { padding-left: 14px !important; padding-right: 14px !important; }
+  .main { padding-top: 4px; }
+  /* 侧栏移到内容之后，先看正文 */
+  .sidebar { order: 3; margin-top: 18px; }
+  /* 流程条适配 */
+  .flow-step, .portal-flow .flow-step { min-width: 44%; flex: 1 1 44%; }
+  /* 文本与点击目标 */
+  body { font-size: 14.5px; line-height: 1.8; }
+  .card h1 { font-size: 20px; }
+  .card h2 { font-size: 17px; }
+  .chapter { padding: 16px; }
+  .chapter .ch-links a { padding: 6px 12px; font-size: 12.5px; }
+  .btn { padding: 12px 22px; font-size: 15px; }
+  .law-title { font-size: 19px; }
+  .law-body { padding: 18px 14px; }
+  .sidebar a { padding: 11px 12px; font-size: 14px; }
+  /* 首页 hero */
+  .hero .stats { gap: 14px 24px; }
+  .hero .stat b { font-size: 20px; }
+  .hero .sub { font-size: 14px; }
+  .chip { padding: 6px 12px; font-size: 12px; }
+}
