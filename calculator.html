@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政府信息公开答复时限计算器</title>
+<link rel="stylesheet" href="css/style.css">
+<style>.wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+.head { background: linear-gradient(135deg, #1a5276, #2980b9); color: #fff; border-radius: 12px; padding: 26px 30px; margin-bottom: 20px; }
+.head h1 { font-size: 23px; margin-bottom: 8px; }
+.head p { font-size: 13.5px; opacity: .9; line-height: 1.8; }
+.nav-links { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.nav-links a { background: #eaf2f8; color: #1a5276; padding: 5px 12px; border-radius: 15px; font-size: 12.5px; text-decoration: none; }
+.card { background: #fff; border: 1px solid #e3e8ee; border-radius: 10px; padding: 22px 26px; margin-bottom: 18px; }
+.card h2 { color: #1a5276; font-size: 18px; margin-bottom: 14px; }
+label { font-size: 14px; color: #333; display: block; margin-bottom: 6px; }
+input[type="date"], select { padding: 9px 12px; border: 1px solid #c0ccd8; border-radius: 6px; font-size: 14px; width: 100%; max-width: 260px; }
+.btn { background: #1a5276; color: #fff; border: none; border-radius: 6px; padding: 10px 24px; font-size: 14px; cursor: pointer; margin-top: 10px; }
+.btn:hover { background: #2980b9; }
+.btn.secondary { background: #7f8c8d; }
+.result { background: #eaf2f8; border-radius: 8px; padding: 16px 20px; margin-top: 14px; display: none; }
+.result table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.result td { padding: 8px 10px; border-bottom: 1px solid #d4e6f1; }
+.result td:first-child { color: #555; width: 45%; }
+.result .deadline { color: #c0392b; font-weight: 700; font-size: 16px; }
+.result .warn { color: #c0392b; font-weight: 700; }
+.result .ok { color: #27ae60; font-weight: 700; }
+.note { font-size: 12.5px; color: #7f8c8d; line-height: 1.9; margin-top: 12px; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: #555; margin-top: 10px; }
+</style>
+<style>/* 统一设计覆盖：将各页内联旧配色对齐统一设计系统 */
+.card{border-radius:12px;border:1px solid #e2e8ef}
+.card h1,.card h2{color:#14375a}
+.card h3{color:#1d4e7d}
+table.rule th{background:#14375a}
+.head,.guide-head{background:linear-gradient(120deg,#0c2440,#14375a 60%,#1d4e7d)}
+.nav-links a{background:#eef4fa;color:#14375a}
+.tab.active,.gen-btn,.btn,.opt.selected{border-color:#14375a;background:#14375a}
+.btn:hover{background:#1d4e7d}
+.flow-step{background:#f0f4f9;border-color:#d0d9e3}
+.flow-step b{color:#14375a}
+.flow-step::after{color:#c9a25a}
+.step,.opt{border-color:#d0d9e3}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="tools.html" class="active">工具</a><a href="faq.html">问答</a><a href="defense-plan.html">复议诉讼</a><a href="regulations.html">制度</a><a href="related-laws.html">法条</a><a href="provenance.html">溯源</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
+</div>
+<div class="layout"><aside class="sidebar"><div class="side-title">目 录 · 机关处理指引</div><div class="grp">壹 · 办理流程</div><a href="guide.html"><span class="ic">01</span>简明办理指引</a><a href="reply-guide.html"><span class="ic">02</span>完整条文版指引</a><div class="grp">贰 · 文书与工具</div><a href="samples.html"><span class="ic">03</span>答复文书范文库</a><a href="templates.html"><span class="ic">04</span>程序文书模板</a><a href="calculator.html" class="active"><span class="ic">05</span>时限计算器</a><a href="tools.html"><span class="ic">06</span>交互工具包</a><div class="grp">叁 · 疑难解答</div><a href="faq.html"><span class="ic">07</span>疑难问答库</a><div class="grp">肆 · 复议诉讼</div><a href="defense-guide.html"><span class="ic">08</span>分类应诉方案</a><a href="defense-plan.html"><span class="ic">09</span>审查倒推应诉</a><a href="warning-cases.html"><span class="ic">10</span>风险警示录</a><div class="grp">伍 · 配套制度</div><a href="regulations.html"><span class="ic">11</span>管理制度模板</a><a href="training.html"><span class="ic">12</span>培训材料</a><a href="annual-report.html"><span class="ic">13</span>年报编制指引</a><div class="grp">陆 · 法规附录</div><a href="related-laws.html"><span class="ic">14</span>配套法条库</a><a href="provenance.html"><span class="ic">15</span>溯源核验清单</a><a href="index.html"><span class="ic">16</span>法规库首页</a></aside><main class="main"><div class="wrap"><div class="head"><h1>使用说明</h1><p>① 选择收到申请的日期（按条例第31条认定：当面提交=提交之日；邮寄=签收之日；平常信函=当日确认之日；网络/传真=双方确认之日）；② 如需补正，可选择补正收到日期（答复期限自补正申请收到之日起算）；③ 如需延长，选择是否延长及延长期限（须经负责人同意并告知申请人，最长20个工作日）。</p><div class="legend"><span>■ 法定答复期限：<b>20个工作日</b>（条例第33条）</span><span>■ 延长后最长：<b>40个工作日</b></span><span>■ 征求意见时间<b>不计算</b>在内（条例第32、34条）</span></div></div><div class="card"><h2>参数设置</h2><div style="margin-bottom:14px"><label>收到申请日期（收件当日必须登记）</label><input type="date" id="receiveDate"></div><div style="margin-bottom:14px"><label>是否经过补正程序？（条例第30条：7个工作日内一次性告知补正）</label><select id="amendSel"><option value="no">未补正</option><option value="yes">已补正（选择补正后申请收到日期）</option></select></div><div style="margin-bottom:14px;display:none" id="amendWrap"><label>收到补正后申请日期（答复期限自该日起算）</label><input type="date" id="amendDate"></div><div style="margin-bottom:14px"><label>是否延长答复期限？（须经负责人同意并告知申请人）</label><select id="extendSel"><option value="no">不延长</option><option value="yes">延长（选择延长期限）</option></select></div><div style="margin-bottom:14px;display:none" id="extendWrap"><label>延长期限（工作日，最长20个）</label><select id="extendDays"><option value="10">10 个工作日</option><option value="15">15 个工作日</option><option value="20">20 个工作日（最长）</option></select></div><button class="btn" onclick="calc()">计算答复期限</button><button class="btn secondary" onclick="reset()">重置</button></div><div class="card"><h2>计算结果</h2><div class="result" id="result"></div><p class="note" style="margin-top:8px">依据：《中华人民共和国政府信息公开条例》第三十一条（收到时间认定）、第三十条（补正后期限重新起算）、第三十三条（20个工作日答复，可延长最长20个工作日；征求第三方和其他机关意见所需时间不计算在期限内）。</p></div><div class="card"><h2>倒排工期参考表（20个工作日）</h2><table style="width:100%;border-collapse:collapse;font-size:13.5px" id="timeline"><tr style="background:#1a5276;color:#fff"><th style="padding:8px">节点</th><th>工作事项</th><th>责任</th></tr><tr><td style="padding:6px;border-bottom:1px solid #eef1f5">第1个工作日</td><td style="border-bottom:1px solid #eef1f5">收文登记、倒排工期</td><td style="border-bottom:1px solid #eef1f5">经办人</td></tr><tr><td style="padding:6px;border-bottom:1px solid #eef1f5">第1-3个工作日</td><td style="border-bottom:1px solid #eef1f5">实质研判</td><td style="border-bottom:1px solid #eef1f5">经办人</td></tr><tr><td style="padding:6px;border-bottom:1px solid #eef1f5">第3-5个工作日</td><td style="border-bottom:1px solid #eef1f5">全面检索+留痕</td><td style="border-bottom:1px solid #eef1f5">经办人</td></tr><tr><td style="padding:6px;border-bottom:1px solid #eef1f5">第5-10个工作日</td><td style="border-bottom:1px solid #eef1f5">草拟答复（最迟第10日送审）</td><td style="border-bottom:1px solid #eef1f5">经办人</td></tr><tr><td style="padding:6px;border-bottom:1px solid #eef1f5">第10-15个工作日</td><td style="border-bottom:1px solid #eef1f5">合法性审核（5日内出意见）</td><td style="border-bottom:1px solid #eef1f5">司法所/法律顾问</td></tr><tr><td style="padding:6px;border-bottom:1px solid #eef1f5">第15-19个工作日</td><td style="border-bottom:1px solid #eef1f5">领导审批签发</td><td style="border-bottom:1px solid #eef1f5">领导</td></tr><tr><td style="padding:6px">第19-20个工作日</td><td>送达归档（严禁压哨）</td><td>经办人</td></tr></table></div>
+</div><script>const holidays2026 = []; // 可在此配置法定节假日（如"2026-10-01"），留空则仅排除周末
+function isWorkday(d) {
+  const day = d.getDay();
+  if (day === 0 || day === 6) return false;
+  const iso = d.toISOString().slice(0,10);
+  if (holidays2026.includes(iso)) return false;
+  return true;
+}
+function addWorkdays(start, n) {
+  let d = new Date(start);
+  let count = 0;
+  while (count < n) {
+    d.setDate(d.getDate() + 1);
+    if (isWorkday(d)) count++;
+  }
+  return d;
+}
+function fmt(d) {
+  const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+  const w = ['日','一','二','三','四','五','六'][d.getDay()];
+  return y + '-' + m + '-' + day + '（周' + w + '）';
+}
+function calc() {
+  const recv = new Date(document.getElementById('receiveDate').value + 'T00:00:00');
+  if (isNaN(recv)) { alert('请选择收到申请日期'); return; }
+  const amend = document.getElementById('amendSel').value === 'yes' ? new Date(document.getElementById('amendDate').value + 'T00:00:00') : null;
+  if (document.getElementById('amendSel').value === 'yes' && isNaN(amend)) { alert('请选择补正后收到日期'); return; }
+  const extend = document.getElementById('extendSel').value === 'yes';
+  const extDays = extend ? parseInt(document.getElementById('extendDays').value) : 0;
+
+  const start = amend || recv;
+  const d20 = addWorkdays(start, 20);
+  const dExt = extend ? addWorkdays(start, 20 + extDays) : null;
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const daysLeft = Math.ceil((d20 - today) / 86400000);
+  const remaining = Math.ceil((d20 - today) / 86400000);
+  const r = document.getElementById('result');
+  let html = '<table>';
+  html += '<tr><td>收到申请之日</td><td>' + fmt(start) + (amend ? '（补正后重新起算）' : '') + '</td></tr>';
+  html += '<tr><td>20个工作日届满日</td><td class="deadline">' + fmt(d20) + '</td></tr>';
+  if (extend) {
+    html += '<tr><td>延长' + extDays + '个工作日后届满日</td><td class="deadline">' + fmt(dExt) + '</td></tr>';
+  }
+  if (remaining < 0) {
+    html += '<tr><td>当前状态</td><td class="warn">已逾期 ' + (-remaining) + ' 天！立即整改并做好复议诉讼应对准备</td></tr>';
+  } else if (remaining <= 5) {
+    html += '<tr><td>剩余时间</td><td class="warn">仅剩 ' + remaining + ' 天（含今日），进入临期管控！立即送审签发</td></tr>';
+  } else if (remaining <= 10) {
+    html += '<tr><td>剩余时间</td><td class="ok">剩 ' + remaining + ' 天，须在第10个工作日前完成送审</td></tr>';
+  } else {
+    html += '<tr><td>剩余时间</td><td class="ok">剩 ' + remaining + ' 天，按倒排节点办理</td></tr>';
+  }
+  html += '<tr><td>送审截止（最迟第10个工作日）</td><td>' + fmt(addWorkdays(start, 10)) + '</td></tr>';
+  html += '<tr><td>延长决定最迟作出日（如需延长）</td><td>' + fmt(addWorkdays(start, 20)) + '（届满前作出并告知）</td></tr>';
+  html += '</table>';
+  html += '<p class="note">征求第三方意见（15个工作日）、征求其他机关意见（15个工作日）所需时间不计算在答复期限内（条例第32、34条）。</p>';
+  r.innerHTML = html;
+  r.style.display = 'block';
+}
+function reset() {
+  document.getElementById('receiveDate').value = '';
+  document.getElementById('amendSel').value = 'no';
+  document.getElementById('amendDate').value = '';
+  document.getElementById('extendSel').value = 'no';
+  document.getElementById('extendDays').value = '10';
+  document.getElementById('amendWrap').style.display = 'none';
+  document.getElementById('extendWrap').style.display = 'none';
+  document.getElementById('result').style.display = 'none';
+}
+document.getElementById('amendSel').addEventListener('change', function(){
+  document.getElementById('amendWrap').style.display = this.value === 'yes' ? 'block' : 'none';
+});
+document.getElementById('extendSel').addEventListener('change', function(){
+  document.getElementById('extendWrap').style.display = this.value === 'yes' ? 'block' : 'none';
+});
+</script>
+</main>
+</div>
+<footer class="footer"><div class="f-title">政府信息公开事项机关处理指引</div>依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制 · 全部法条均引自官方公开发布原文<br>内部工作指引 · 供两江新区各机关政府信息公开工作人员使用 · 可离线运行
+</footer>
+</body>
+</html>
