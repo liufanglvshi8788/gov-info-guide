@@ -335,8 +335,49 @@ table.tbl .law { color: var(--text-3); font-size: 12px; }
   /* 内容容器内边距统一 */
   .wrap, .guide-wrap, .risk-wrap, .tpl-wrap, .law-page { padding-left: 14px !important; padding-right: 14px !important; }
   .main { padding-top: 4px; }
-  /* 侧栏移到内容之后，先看正文 */
-  .sidebar { order: 3; margin-top: 18px; }
+  /* 指引栏：手机端置顶为横向可滑动选项条（topbar 下方 sticky） */
+  .sidebar {
+    order: 0;
+    width: 100%;
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+    max-height: none;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+    padding: 8px 12px;
+    margin: 0;
+    border-radius: 0 0 12px 12px;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(12,36,64,.08);
+    scrollbar-width: none;
+  }
+  .sidebar::-webkit-scrollbar { display: none; }
+  .sidebar .side-title, .sidebar .grp { display: none; }
+  .sidebar a {
+    flex-shrink: 0;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 14px;
+    font-size: 13px;
+    border-left: none;
+    border-radius: 18px;
+    background: #f0f4f9;
+    color: var(--primary);
+    margin: 0;
+  }
+  .sidebar a .ic { display: none; }
+  .sidebar a:hover { background: #e4ecf5; color: var(--primary); }
+  .sidebar a.active { background: var(--primary); color: #fff; font-weight: 600; }
+  .sidebar a.active .ic { background: transparent; color: #fff; }
+  /* 顶栏折叠菜单展开时盖住指引栏 */
+  .topnav.open { z-index: 300; }
   /* 流程条适配 */
   .flow-step, .portal-flow .flow-step { min-width: 44%; flex: 1 1 44%; }
   /* 文本与点击目标 */
