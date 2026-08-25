@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模板直用 · 工作人员速查版</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.staff-tpl { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; }
+.staff-tpl h3 { font-size: 15.5px; color: var(--primary); margin-bottom: 4px; }
+.staff-tpl .sub { font-size: 12px; color: var(--text-3); margin-bottom: 10px; }
+.staff-tpl pre { background: #fafbfc; border: 1px dashed #c0ccd8; border-radius: 8px; padding: 16px 18px; font-family: "SimSun", serif; font-size: 13.5px; line-height: 2; white-space: pre-wrap; color: #222; }
+.copy-btn { background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 7px 18px; font-size: 13px; cursor: pointer; margin-bottom: 10px; }
+.copy-btn:hover { background: var(--primary-light); }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="logo">速</span>
+      <span class="name">政府信息公开事项处理<small>工作人员速查版 · 前置指引</small></span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html">收到申请怎么办</a>
+      <a href="answers.html">答复类型速查</a>
+      <a href="samples.html" class="active">模板直用</a>
+      <a href="tools.html">计算器与向导</a>
+      <a href="faq.html">高频问答</a>
+      <a href="checklist.html">发出前自查</a>
+      <a href="../index.html" style="background:rgba(255,255,255,.15);border-radius:16px;">法律顾问完整版 →</a>
+    </nav>
+    <button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button>
+  </div>
+</div>
+<div class="staff-wrap">
+  <div class="staff-hero">
+    <h1>高频模板直用（5 件套）</h1>
+    <p>最常用的 5 份答复文书，替换【】内容即可使用。全部 17 类范文与程序性文书见<a href="../samples.html" style="color:#fff;text-decoration:underline;">法律顾问完整版·范文库</a>。</p>
+  </div>
+
+  <div class="staff-tpl">
+    <h3>一、予以公开答复书</h3>
+    <div class="sub">依据：条例第36条第(二)项</div>
+    <button class="copy-btn" onclick="copyTpl(this)">复制</button>
+    <pre>【机关名称】政府信息公开申请答复书
+【文号：×××依复〔20××〕第×号】
+
+【申请人姓名/名称】：
+    你（单位）于【×年×月×日】提出的政府信息公开申请（申请编号：【×××】）收悉。
+    经审查，你（单位）申请公开的【信息名称】可以公开。现随答复提供（或：可通过【获取方式、途径和时间】获取）。
+    如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。
+
+                                        【机关名称】（盖章）
+                                        【×年×月×日】</pre>
+  </div>
+
+  <div class="staff-tpl">
+    <h3>二、不予公开答复书（注意复议前置告知）</h3>
+    <div class="sub">依据：条例第36条第(三)项、第14/15/16条；复议法第23条第(四)项（复议前置）</div>
+    <button class="copy-btn" onclick="copyTpl(this)">复制</button>
+    <pre>【机关名称】政府信息公开申请答复书
+【文号：×××依复〔20××〕第×号】
+
+【申请人姓名/名称】：
+    你（单位）于【×年×月×日】提出的政府信息公开申请（申请编号：【×××】）收悉。
+    经审查，你（单位）申请公开的【信息名称】，依据《中华人民共和国政府信息公开条例》第【十四/十五/十六】条第【×】款的规定，属于【不予公开情形表述】，决定不予公开。理由如下：【具体说明理由，逐项列明】。
+    如对本答复不服，依《中华人民共和国行政复议法》第二十三条第一款第（四）项的规定，请自收到本答复之日起60日内先向【复议机关名称】申请行政复议（对本级政府工作部门的答复不服的，向本级人民政府申请复议；垂直管理部门除外）；对行政复议决定不服的，可以自收到行政复议决定书之日起15日内依法向人民法院提起行政诉讼。
+
+                                        【机关名称】（盖章）
+                                        【×年×月×日】</pre>
+  </div>
+
+  <div class="staff-tpl">
+    <h3>三、信息不存在答复书（必须附检索留痕）</h3>
+    <div class="sub">依据：条例第36条第(四)项；法释〔2025〕8号第5条（检索义务举证）</div>
+    <button class="copy-btn" onclick="copyTpl(this)">复制</button>
+    <pre>【机关名称】政府信息公开申请答复书
+【文号：×××依复〔20××〕第×号】
+
+【申请人姓名/名称】：
+    你（单位）于【×年×月×日】提出的政府信息公开申请（申请编号：【×××】）收悉。
+    经检索，本机关在【检索范围：纸质档案、电子档案、公文系统、门户网站等全部载体】中以【检索关键词：×××、×××（不少于2组）】进行了全面检索（检索时间：【×年×月×日】），未发现你（单位）申请公开的【信息名称】。依据《中华人民共和国政府信息公开条例》第三十六条第（四）项的规定，告知你（单位）该政府信息不存在。
+    如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。
+
+                                        【机关名称】（盖章）
+                                        【×年×月×日】
+※ 随卷附《检索记录表》（范围/关键词/结果/检索人/日期），无留痕=败诉风险。</pre>
+  </div>
+
+  <div class="staff-tpl">
+    <h3>四、不属于本机关公开答复书</h3>
+    <div class="sub">依据：条例第36条第(五)项</div>
+    <button class="copy-btn" onclick="copyTpl(this)">复制</button>
+    <pre>【机关名称】政府信息公开申请答复书
+【文号：×××依复〔20××〕第×号】
+
+【申请人姓名/名称】：
+    你（单位）于【×年×月×日】提出的政府信息公开申请（申请编号：【×××】）收悉。
+    经审查，你（单位）申请公开的【信息名称】不属于本行政机关负责公开，理由：【说明理由】。该信息的负责公开机关为【机关名称】，联系方式【×××】。
+    如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。
+
+                                        【机关名称】（盖章）
+                                        【×年×月×日】</pre>
+  </div>
+
+  <div class="staff-tpl">
+    <h3>五、补正告知书（程序性）</h3>
+    <div class="sub">依据：条例第30条（7个工作日内一次性告知）</div>
+    <button class="copy-btn" onclick="copyTpl(this)">复制</button>
+    <pre>【机关名称】政府信息公开申请补正告知书
+【文号：×××依补〔20××〕第×号】
+
+【申请人姓名/名称】：
+    你（单位）于【×年×月×日】提出的政府信息公开申请（申请编号：【×××】）收悉。经审查，申请内容不明确，依据《中华人民共和国政府信息公开条例》第三十条的规定，请于收到本告知书之日起【×】个工作日内一次性补正下列事项：
+    1.【补正事项一，如：申请公开的信息名称、文号或特征性描述】；
+    2.【补正事项二，如：获取信息的具体用途或所需形式】。
+    补正期限自收到补正材料之日起重新计算；无正当理由逾期不补正的，视为放弃申请。
+
+                                        【机关名称】（盖章）
+                                        【×年×月×日】
+※ 务必一次性告知全部补正事项（多次补正=程序违法）；保留送达凭证。</pre>
+  </div>
+
+  <p class="staff-footer-note">其余 12 类范文与程序文书（第三方征求意见书、延期告知、收费通知、送达回证等）→ <a href="../samples.html">法律顾问完整版·范文库</a>；打印用空白表 → <a href="../templates.html">程序文书模板</a></p>
+</div>
+<footer class="footer">
+  <div class="f-title">政府信息公开事项处理 · 工作人员速查版</div>
+  依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制<br>
+  内部工作指引 · 详细条文见法律顾问完整版
+</footer>
+<script>
+function copyTpl(btn) {
+  const pre = btn.nextElementSibling;
+  const range = document.createRange();
+  range.selectNodeContents(pre);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  try { document.execCommand('copy'); btn.textContent = '已复制 ✓'; setTimeout(() => btn.textContent = '复制', 1500); } catch(e) { btn.textContent = '复制失败'; }
+  sel.removeAllRanges();
+}
+</script>
+</body>
+</html>
