@@ -433,3 +433,16 @@ table.staff-tbl tr:nth-child(even) { background: #f8fafc; }
   .hero .sub { font-size: 14px; }
   .chip { padding: 6px 12px; font-size: 12px; }
 }
+
+/* ===== 版本切换：醒目按钮 + 常驻悬浮球 ===== */
+.ver-switch{display:inline-flex;align-items:center;gap:5px;background:var(--accent)!important;color:#fff!important;font-weight:700;padding:7px 15px;border-radius:20px;box-shadow:0 2px 8px rgba(168,132,58,.45);white-space:nowrap;}
+.ver-switch:hover{background:#b8934e!important;transform:translateY(-1px);}
+.ver-fab{position:fixed;right:20px;bottom:20px;z-index:999;display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-weight:700;font-size:15px;padding:13px 22px;border-radius:30px;box-shadow:0 6px 20px rgba(28,61,94,.4);text-decoration:none;transition:all .25s;}
+.ver-fab:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(28,61,94,.5);color:#fff;}
+.ver-fab .ic{font-size:18px;line-height:1;}
+@media (max-width:600px){.ver-fab{right:12px;bottom:12px;padding:11px 16px;font-size:13px;}}
+
+/* 决策向导 · 左侧栏醒目入口 */
+.side-feat{display:block;background:linear-gradient(135deg,#c9a25a,#e0b563)!important;color:#3a2a00!important;font-weight:700;padding:10px 14px;border-radius:8px;margin:4px 0 8px;box-shadow:0 2px 8px rgba(201,162,90,.4);}
+.side-feat:hover{color:#000!important;filter:brightness(1.05);}
+.side-feat.active{outline:3px solid #fff;outline-offset:-3px;}

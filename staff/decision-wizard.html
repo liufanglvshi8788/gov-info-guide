@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>答复类型决策向导 · 工作人员速查版</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.staff-wrap { max-width: 980px; margin: 0 auto; padding: 18px 16px 60px; }
+.staff-hero { background: linear-gradient(120deg,#0c2440,#14375a 60%,#1d4e7d); color:#fff; border-radius:12px; padding:22px 26px; margin-bottom:16px; }
+.staff-hero h1 { font-size: 21px; margin-bottom: 6px; }
+.staff-hero p { font-size: 13.5px; opacity:.92; line-height:1.9; }
+.tool-box { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; }
+.tool-box h3 { font-size: 15.5px; color: var(--primary); margin-bottom: 12px; }
+.step-q { background: #f8fafc; border: 1px solid #d4e6f1; border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+.step-q .qtext { font-size: 14.5px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+.opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.opt { background: #fff; border: 1.5px solid #c0ccd8; border-radius: 8px; padding: 9px 16px; font-size: 13.5px; cursor: pointer; }
+.opt:hover { border-color: var(--primary-light); }
+.opt.selected { border-color: var(--primary); background: #eef4fa; font-weight: 700; }
+.concl { background: #eaf6f1; border-left: 4px solid var(--success); border-radius: 0 8px 8px 0; padding: 14px 16px; margin-top: 12px; font-size: 13.5px; line-height: 2; display: none; }
+.concl.show { display: block; }
+.concl b { color:#1e8449; }
+.restart { background: var(--primary); color:#fff; border:none; border-radius:6px; padding:9px 18px; font-size:13px; cursor:pointer; margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="logo">速</span>
+      <span class="name">政府信息公开事项处理<small>工作人员速查版 · 前置指引</small></span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html">收到申请怎么办</a>
+      <a href="answers.html">答复类型速查</a>
+      <a href="samples.html">模板直用</a>
+      <a href="decision-wizard.html" class="active">决策向导</a>
+      <a href="tools.html">时限计算器</a>
+      <a href="faq.html">高频问答</a>
+      <a href="checklist.html">发出前自查</a>
+      <a href="../index.html" class="ver-switch">⚖ 法律顾问完整版</a>
+    </nav>
+    <button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button>
+  </div>
+</div>
+<div class="staff-wrap">
+  <div class="staff-hero">
+    <h1>答复类型决策向导 · 速查</h1>
+    <p>按实际情况逐题选择，自动给出答复类型与依据，并直链对应模板。复杂个案请对照"法律顾问完整版"。</p>
+  </div>
+
+  <div class="tool-box">
+    <h3>① 答复类型决策向导</h3>
+    <div id="tree"></div>
+    <button class="restart" style="margin-top:10px" onclick="resetTree()">重新开始</button>
+  </div>
+
+  <p class="staff-footer-note">完整版决策向导（含"已移交档案馆/部分公开/重复申请"等更多分支）→ <a href="../decision-wizard.html">法律顾问完整版·决策向导</a></p>
+</div>
+<footer class="footer">
+  <div class="f-title">政府信息公开事项处理 · 工作人员速查版</div>
+  依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制<br>
+  内部工作指引 · 详细条文见法律顾问完整版
+</footer>
+<script>
+const QS = [
+  { q: '1. 申请内容是否明确？', opts: ['明确', '不明确'], next: { '明确': 1, '不明确': 'r:补正' } },
+  { q: '2. 是否属政府信息（行政管理中制作或获取的信息）？', opts: ['是', '否'], next: { '是': 2, '否': 'r:不属于政府信息' } },
+  { q: '3. 是否本单位职责？', opts: ['是', '否'], next: { '是': 3, '否': 'r:不属于本机关' } },
+  { q: '4. 检索是否找到该信息？', opts: ['找到', '未找到'], next: { '找到': 4, '未找到': 'r:信息不存在' } },
+  { q: '5. 是否属于不予公开情形（国家秘密/法定禁止/三安全一稳定/商业秘密个人隐私/内部事务/过程性/执法案卷）？', opts: ['属于', '不属于'], next: { '属于': 'r:不予公开', '不属于': 'r:予以公开' } }
+];
+const CONCL = {
+  '补正': { t: '告知补正', d: '7个工作日内一次性告知补正事项和合理期限（条例第30条）。', s: '../samples.html#s10' },
+  '不属于政府信息': { t: '告知不属于政府信息', d: '说明理由并告知业务查询等相应渠道（条例第2条；国办公开办函〔2016〕206号）。', s: '../samples.html' },
+  '不属于本机关': { t: '告知不属于本机关公开', d: '说明理由，能确定负责机关的告知名称、联系方式（条例第36条(五)）。', s: '../samples.html#s5' },
+  '信息不存在': { t: '告知信息不存在', d: '附检索留痕证据（条例第36条(四)；法释〔2025〕8号第5条）。', s: '../samples.html#s4' },
+  '不予公开': { t: '决定不予公开', d: '逐项说明理由并引第14/15/16条；救济告知写"先申请行政复议"（复议前置，复议法第23条(四)）。', s: '../samples.html#s3' },
+  '予以公开': { t: '予以公开', d: '提供信息或告知获取方式、途径和时间（条例第36条(二)）。', s: '../samples.html#s1' }
+};
+let cur = 0;
+function renderTree() {
+  const box = document.getElementById('tree');
+  if (typeof cur === 'string') {
+    const c = CONCL[cur.replace('r:', '')];
+    box.innerHTML = '<div class="concl show"><b>结论：' + c.t + '</b><br>' + c.d + '<br><a href="' + c.s + '">使用对应模板 →</a></div>';
+    return;
+  }
+  const s = QS[cur];
+  box.innerHTML = '<div class="step-q"><div class="qtext">' + s.q + '</div><div class="opts">' + s.opts.map(o => '<button class="opt" onclick="pick(\'' + o + '\')">' + o + '</button>').join('') + '</div></div>';
+}
+function pick(o) { cur = QS[cur].next[o]; renderTree(); }
+function resetTree() { cur = 0; renderTree(); }
+renderTree();
+</script>
+<a href="../index.html" class="ver-fab"><span class="ic">⚖</span>法律顾问完整版</a>
+</body>
+</html>

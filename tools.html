@@ -56,98 +56,13 @@ table.rule th{background:#14375a}
 </style>
 </head>
 <body>
-<div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="tools.html" class="active">工具</a><a href="faq.html">问答</a><a href="defense-plan.html">复议诉讼</a><a href="regulations.html">制度</a><a href="related-laws.html">法条</a><a href="provenance.html">溯源</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
+<div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="decision-wizard.html">决策向导</a><a href="tools.html" class="active">工具</a><a href="faq.html">问答</a><a href="defense-guide.html">复议诉讼</a><a href="regulations.html">制度</a><a href="related-laws.html">法条</a><a href="provenance.html">溯源</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
 </div>
-<div class="layout"><aside class="sidebar"><div class="side-title">目 录 · 机关处理指引</div><div class="grp">壹 · 办理流程</div><a href="guide.html"><span class="ic">01</span>简明办理指引</a><a href="reply-guide.html"><span class="ic">02</span>完整条文版指引</a><div class="grp">贰 · 文书与工具</div><a href="samples.html"><span class="ic">03</span>答复文书范文库</a><a href="templates.html"><span class="ic">04</span>程序文书模板</a><a href="calculator.html"><span class="ic">05</span>时限计算器</a><a href="tools.html" class="active"><span class="ic">06</span>交互工具包</a><div class="grp">叁 · 疑难解答</div><a href="faq.html"><span class="ic">07</span>疑难问答库</a><div class="grp">肆 · 复议诉讼</div><a href="defense-guide.html"><span class="ic">08</span>分类应诉方案</a><a href="defense-plan.html"><span class="ic">09</span>审查倒推应诉</a><a href="warning-cases.html"><span class="ic">10</span>风险警示录</a><div class="grp">伍 · 配套制度</div><a href="regulations.html"><span class="ic">11</span>管理制度模板</a><a href="training.html"><span class="ic">12</span>培训材料</a><a href="annual-report.html"><span class="ic">13</span>年报编制指引</a><div class="grp">陆 · 法规附录</div><a href="related-laws.html"><span class="ic">14</span>配套法条库</a><a href="provenance.html"><span class="ic">15</span>溯源核验清单</a><a href="index.html"><span class="ic">16</span>法规库首页</a></aside><main class="main"><div class="wrap"><div class="head"><h1>三大工具</h1><p>① <b>答复类型决策向导</b>：按实际情况逐题选择，自动给出对应答复类型、法律依据和范文链接；② <b>答复书生成器</b>：填写表单自动生成答复书初稿；③ <b>风险自查清单</b>：逐项勾选核查，自动提示遗漏与风险。</p></div><div class="tabs"><button class="tab active" onclick="showTab(0)">决策向导</button><button class="tab" onclick="showTab(1)">文书生成器</button><button class="tab" onclick="showTab(2)">风险自查</button></div><!-- Tab 0: 决策向导 --><div class="panel active" id="tab0"><div class="card"><h2>答复类型决策向导</h2><div id="tree"></div><button class="restart" onclick="restartTree()">↺ 重新开始</button></div></div><!-- Tab 1: 文书生成器 --><div class="panel" id="tab1"><div class="card"><h2>答复书生成器（初稿）</h2><label>机关名称</label><input type="text" id="g_org" placeholder="如：××街道办事处"><label>申请编号</label><input type="text" id="g_no" placeholder="如：××依复〔2026〕第1号"><label>申请人</label><input type="text" id="g_app" placeholder="如：张三"><label>收到申请日期</label><input type="text" id="g_date" placeholder="如：2026年3月1日"><label>答复类型</label><select id="g_type"><option value="1">① 予以公开</option><option value="2">② 已主动公开</option><option value="3">③ 不予公开</option><option value="4">④ 信息不存在</option><option value="5">⑤ 不属于本机关公开</option><option value="6">⑥ 已移交档案馆</option><option value="7">⑦ 部分公开（区分处理）</option><option value="16">⑯ 重复申请不予重复处理</option><option value="17">⑰ 工商/不动产等特别规定</option></select><label>申请公开的信息名称</label><input type="text" id="g_info" placeholder="如：××小区改造项目审批文件"><label>具体答复内容（选填，可补充说明）</label><textarea id="g_detail"></textarea><button class="gen-btn" onclick="genDoc()">生成答复书</button><div class="gen-out" id="genOut"></div><p style="font-size:12.5px;color:#7f8c8d;margin-top:10px">生成内容为初稿框架，正式发出前须经合法性审核；复议机关/法院名称请填写准确。</p></div></div><!-- Tab 2: 风险自查 --><div class="panel" id="tab2"><div class="card"><h2>办理风险自查清单（发出前逐项勾选）</h2><div id="chklist"></div><button class="gen-btn" onclick="checkRisk()">检查风险</button><div class="chk-result" id="chkResult"></div></div></div>
+<div class="layout"><aside class="sidebar"><div class="side-title">目 录 · 机关处理指引</div><div class="grp">壹 · 办理流程</div><a href="guide.html"><span class="ic">01</span>简明办理指引</a><a href="reply-guide.html"><span class="ic">02</span>完整条文版指引</a><div class="grp">贰 · 文书与工具</div><a href="decision-wizard.html" class="side-feat">🧭 答复决策向导</a><a href="samples.html"><span class="ic">03</span>答复文书范文库</a><a href="templates.html"><span class="ic">04</span>程序文书模板</a><a href="calculator.html"><span class="ic">05</span>时限计算器</a><a href="tools.html" class="active"><span class="ic">06</span>交互工具包</a><div class="grp">叁 · 疑难解答</div><a href="faq.html"><span class="ic">07</span>疑难问答库</a><div class="grp">肆 · 复议诉讼</div><a href="defense-guide.html"><span class="ic">08</span>分类应诉方案</a><div class="grp">伍 · 配套制度</div><a href="regulations.html"><span class="ic">09</span>管理制度模板</a><a href="training.html"><span class="ic">10</span>培训材料</a><a href="annual-report.html"><span class="ic">11</span>年报编制指引</a><div class="grp">陆 · 法规附录</div><a href="related-laws.html"><span class="ic">12</span>配套法条库</a><a href="provenance.html"><span class="ic">13</span>溯源核验清单</a><a href="index.html"><span class="ic">14</span>法规库首页</a></aside><main class="main"><div class="wrap"><div class="head"><h1>文书生成与风险自查</h1><p>① <b>答复书生成器</b>：填写表单自动生成答复书初稿；② <b>风险自查清单</b>：逐项勾选核查，自动提示遗漏与风险。</p></div><div class="tabs"><button class="tab active" onclick="showTab(0)">文书生成器</button><button class="tab" onclick="showTab(1)">风险自查</button></div><!-- Tab 0: 文书生成器 --><div class="panel active" id="tab0"><div class="card"><h2>答复书生成器（初稿）</h2><label>机关名称</label><input type="text" id="g_org" placeholder="如：××街道办事处"><label>申请编号</label><input type="text" id="g_no" placeholder="如：××依复〔2026〕第1号"><label>申请人</label><input type="text" id="g_app" placeholder="如：张三"><label>收到申请日期</label><input type="text" id="g_date" placeholder="如：2026年3月1日"><label>答复类型</label><select id="g_type"><option value="1">① 予以公开</option><option value="2">② 已主动公开</option><option value="3">③ 不予公开</option><option value="4">④ 信息不存在</option><option value="5">⑤ 不属于本机关公开</option><option value="6">⑥ 已移交档案馆</option><option value="7">⑦ 部分公开（区分处理）</option><option value="16">⑯ 重复申请不予重复处理</option><option value="17">⑰ 工商/不动产等特别规定</option></select><label>申请公开的信息名称</label><input type="text" id="g_info" placeholder="如：××小区改造项目审批文件"><label>具体答复内容（选填，可补充说明）</label><textarea id="g_detail"></textarea><button class="gen-btn" onclick="genDoc()">生成答复书</button><div class="gen-out" id="genOut"></div><p style="font-size:12.5px;color:#7f8c8d;margin-top:10px">生成内容为初稿框架，正式发出前须经合法性审核；复议机关/法院名称请填写准确。</p></div></div><!-- Tab 1: 风险自查 --><div class="panel" id="tab1"><div class="card"><h2>办理风险自查清单（发出前逐项勾选）</h2><div id="chklist"></div><button class="gen-btn" onclick="checkRisk()">检查风险</button><div class="chk-result" id="chkResult"></div></div></div>
 </div><script>/* ===== Tab 切换 ===== */
 function showTab(i) {
   document.querySelectorAll('.tab').forEach((t, idx) =>t.classList.toggle('active', idx === i));
   document.querySelectorAll('.panel').forEach((p, idx) =>p.classList.toggle('active', idx === i));
-}
-
-/* ===== 决策向导 ===== */
-const tree = [
-  { q: "申请内容是否明确？（有信息名称/文号/特征描述）", opts: [
-    { t: "不明确", to: { q: "是否已7个工作日内一次性告知补正？", opts: [
-      { t: "已告知补正", concl: "10-补正", to: null },
-      { t: "尚未告知", concl: "10-补正", to: null }
-    ]}},
-    { t: "明确", to: { q: "申请是否属于信访、投诉、举报形式？", opts: [
-      { t: "是", concl: "11-信访", to: null },
-      { t: "否", to: { q: "申请内容是否属于政府信息？（条例第2条）", opts: [
-        { t: "否（如业务查询/党务）", concl: "17-特别", to: null },
-        { t: "是", to: { q: "是否属于本单位职责范围？", opts: [
-          { t: "否", concl: "5-不属于", to: null },
-          { t: "是", to: { q: "是否已主动公开？", opts: [
-            { t: "是", concl: "2-已公开", to: null },
-            { t: "否", to: { q: "经全面检索，信息是否存在？", opts: [
-              { t: "不存在（附检索留痕）", concl: "4-不存在", to: null },
-              { t: "存在", to: { q: "是否属于法定不予公开情形？（第14-16条）", opts: [
-                { t: "是（可区分处理则部分公开）", concl: "3-不予公开", to: null },
-                { t: "否", to: { q: "是否涉及第三方权益（商业秘密/个人隐私）？", opts: [
-                  { t: "是（须书面征求第三方意见）", concl: "8-第三方", to: null },
-                  { t: "否", to: { q: "数量频次是否明显超过合理范围？", opts: [
-                    { t: "是", concl: "13-收费", to: null },
-                    { t: "否", concl: "1-予以公开", to: null }
-                  ]}}
-                ]}}
-              ]}}
-            ]}}
-          ]}}
-        ]}}
-      ]}}
-    ]}}
-  ]}
-];
-const conclMap = {
-  "1-予以公开": { t: "予以公开", d: "依据《条例》第36条第(二)项向申请人提供信息或告知获取方式、途径和时间；按第40条确定提供形式。", s: "samples.html#s1" },
-  "2-已公开": { t: "已主动公开", d: "依据《条例》第36条第(一)项告知获取方式、途径（附网址/查阅地点）。", s: "samples.html#s2" },
-  "3-不予公开": { t: "不予公开（说明理由）", d: "依据《条例》第36条第(三)项及第14-16条，逐项说明不予公开理由；可区分处理的按第37条部分公开。", s: "samples.html#s3" },
-  "4-不存在": { t: "经检索信息不存在", d: "依据《条例》第36条第(四)项告知信息不存在；必须附检索留痕证据（法释〔2025〕8号第5条举证责任）。", s: "samples.html#s4" },
-  "5-不属于": { t: "不属于本机关公开", d: "依据《条例》第36条第(五)项告知并说明理由，能确定负责机关的告知名称、联系方式。", s: "samples.html#s5" },
-  "6-已移交": { t: "已移交档案馆", d: "按档案法告知向档案馆申请查阅（国办公开办函〔2019〕14号）。", s: "samples.html#s6" },
-  "7-部分公开": { t: "部分公开（区分处理）", d: "依据《条例》第37条提供可公开部分，对不予公开部分说明理由。", s: "samples.html#s7" },
-  "8-第三方": { t: "涉第三方权益", d: "书面征求第三方意见（15个工作日，条例第32条），按意见决定公开/不公开；注意公共利益评估。", s: "samples.html#s8" },
-  "10-补正": { t: "要求补正", d: "依据《条例》第30条，7个工作日内一次性告知补正事项和合理期限；答复期限自收到补正申请之日起算。", s: "samples.html#s10" },
-  "11-信访": { t: "信访投诉不按申请处理", d: "依据《条例》第39条第1款告知不作为政府信息公开申请处理，可告知通过相应渠道提出。", s: "samples.html#s11" },
-  "13-收费": { t: "数量频次超合理范围", d: "依据《条例》第35、42条及国办函〔2020〕109号，可要求说明理由、收取信息处理费。", s: "samples.html#s13" },
-  "16-重复": { t: "重复申请不予重复处理", d: "依据《条例》第36条第(六)项告知不予重复处理。", s: "samples.html#s16" },
-  "17-特别": { t: "工商/不动产等特别规定", d: "依据《条例》第36条第(七)项及国办公开办函〔2016〕206号，告知按专门法律法规办理。", s: "samples.html#s17" }
-};
-function restartTree() {
-  buildTree(tree[0], document.getElementById('tree'));
-}
-function buildTree(node, container) {
-  container.innerHTML = '';
-  const step = document.createElement('div');
-  step.className = 'step';
-  step.innerHTML = '<div class="qtext">' + node.q + '</div><div class="opts"></div>';
-  const optsBox = step.querySelector('.opts');
-  node.opts.forEach(o =>{
-    const btn = document.createElement('div');
-    btn.className = 'opt';
-    btn.textContent = o.t;
-    btn.onclick = function() {
-      optsBox.querySelectorAll('.opt').forEach(x =>x.classList.remove('selected'));
-      btn.classList.add('selected');
-      const old = step.querySelector('.concl');
-      if (old) old.remove();
-      if (o.concl) {
-        const c = conclMap[o.concl];
-        const div = document.createElement('div');
-        div.className = 'concl show';
-        div.innerHTML = '<b>结论：' + c.t + '</b><br>' + c.d + '<br>查看范文：<a href="' + c.s + '" target="_blank">' + c.s + '</a>';
-        step.appendChild(div);
-      } else if (o.to) {
-        const childContainer = document.createElement('div');
-        childContainer.style.marginTop = '14px';
-        step.appendChild(childContainer);
-        buildTree(o.to, childContainer);
-      }
-    };
-    optsBox.appendChild(btn);
-  });
-  container.appendChild(step);
 }
 
 /* ===== 文书生成器 ===== */
@@ -159,6 +74,10 @@ function genDoc() {
   const info = document.getElementById('g_info').value || '【信息名称】';
   const type = document.getElementById('g_type').value;
   const det = document.getElementById('g_detail').value;
+  let relief = '如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。';
+  if (type === "3") {
+    relief = '如对本答复不服，根据《中华人民共和国行政复议法》第二十三条第（四）项，应当先向【复议机关名称】申请行政复议（申请期限：收到本答复之日起60日内）；对行政复议决定不服的，可以自收到复议决定书之日起十五日内向【人民法院名称】提起行政诉讼。';
+  }
   const body = {
     "1": '经审查，你（单位）申请公开的' + info + '属于可以公开的政府信息。依据《中华人民共和国政府信息公开条例》第三十六条第（二）项的规定，现向你（单位）提供该政府信息（或：告知获取该政府信息的方式、途径和时间：×××）。',
     "2": '经审查，你（单位）申请公开的' + info + '，本机关已主动公开。依据《中华人民共和国政府信息公开条例》第三十六条第（一）项的规定，现告知你（单位）获取该政府信息的方式、途径如下：【公开网址：×××】。',
@@ -170,7 +89,7 @@ function genDoc() {
     "16": '经审查，你（单位）申请公开的' + info + '与本机关【×年×月×日】作出的【文号】答复所涉信息相同。依据《中华人民共和国政府信息公开条例》第三十六条第（六）项的规定，告知你（单位）不予重复处理。',
     "17": '经审查，你（单位）申请获取的' + info + '属于特定行政管理领域的业务查询事项。依据《中华人民共和国政府信息公开条例》第三十六条第（七）项及有关规定，请你（单位）依照【专门法律法规名称】的规定，向【办理机关】申请查询（地址：×××）。'
   }[type];
-  const text = org + '政府信息公开申请答复书\n' + no + '\n\n' + app + '：\n    你（单位）于' + date + '提出的政府信息公开申请（申请编号：【×××】）收悉。\n    ' + body + (det ? '\n    ' + det : '') + '\n    如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。\n\n' + ' '.repeat(40) + org + '（盖章）\n' + ' '.repeat(40) + '【×年×月×日】';
+  const text = org + '政府信息公开申请答复书\n' + no + '\n\n' + app + '：\n    你（单位）于' + date + '提出的政府信息公开申请（申请编号：【×××】）收悉。\n    ' + body + (det ? '\n    ' + det : '') + '\n    ' + relief + '\n\n' + ' '.repeat(40) + org + '（盖章）\n' + ' '.repeat(40) + '【×年×月×日】';
   const out = document.getElementById('genOut');
   out.textContent = text;
   out.style.display = 'block';
@@ -189,7 +108,7 @@ const checks = [
   "涉第三方权益的已书面征求第三方意见并留存（未仅电话沟通）",
   "需延长的已经负责人同意并在届满前告知申请人",
   "答复初稿已在第10个工作日前送司法所/法律顾问审核并取得书面意见",
-  "答复书已包含救济途径告知（60日复议/6个月诉讼）",
+  "答复书已包含救济途径告知（60日复议/6个月诉讼；不予公开类须先申请行政复议）",
   "已按规范送达（直接/委托/邮政EMS，非其他快递）并留存送达凭证",
   "已告知负责公开机关的名称和联系方式（"不属于本机关"类）",
   "一案一卷归档材料已备齐（收文/研判/检索/文稿/审核/签发/送达）"
@@ -224,12 +143,12 @@ function checkRisk() {
   box.style.display = 'block';
 }
 
-restartTree();
 buildChk();
 </script>
 </main>
 </div>
 <footer class="footer"><div class="f-title">政府信息公开事项机关处理指引</div>依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制 · 全部法条均引自官方公开发布原文<br>内部工作指引 · 供两江新区各机关政府信息公开工作人员使用 · 可离线运行
 </footer>
+<a href="staff/index.html" class="ver-fab"><span class="ic">👥</span>工作人员速查版</a>
 </body>
 </html>
