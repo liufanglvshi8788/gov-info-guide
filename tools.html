@@ -3,152 +3,332 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>交互工具包 - 决策流程 / 文书生成器 / 风险自查</title>
+<title>答复书自动生成器 · 配套工具</title>
 <link rel="stylesheet" href="css/style.css">
-<style>.wrap { max-width: 1000px; margin: 0 auto; padding: 24px 16px 60px; }
-.head { background: linear-gradient(135deg, #1a5276, #2980b9); color: #fff; border-radius: 12px; padding: 26px 30px; margin-bottom: 20px; }
+<style>
+.wrap { max-width: 1000px; margin: 0 auto; padding: 24px 16px 60px; }
+.head { background: linear-gradient(120deg, #0c2440, #14375a 60%, #1d4e7d); color: #fff; border-radius: 14px; padding: 26px 30px; margin-bottom: 20px; box-shadow: 0 10px 26px rgba(12,36,64,.12); }
 .head h1 { font-size: 23px; margin-bottom: 8px; }
-.head p { font-size: 13.5px; opacity: .9; line-height: 1.8; }
+.head p { font-size: 13.5px; opacity: .9; line-height: 1.9; }
 .tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
-.tab { background: #eaf2f8; color: #1a5276; border: none; border-radius: 20px; padding: 8px 20px; font-size: 14px; cursor: pointer; }
-.tab.active { background: #1a5276; color: #fff; }
+.tab { background: #eef4fa; color: #14375a; border: none; border-radius: 20px; padding: 8px 20px; font-size: 14px; cursor: pointer; transition: all .2s; }
+.tab.active { background: #14375a; color: #fff; }
 .panel { display: none; }
 .panel.active { display: block; }
-.card { background: #fff; border: 1px solid #e3e8ee; border-radius: 10px; padding: 22px 26px; margin-bottom: 16px; }
-.card h2 { color: #1a5276; font-size: 18px; margin-bottom: 12px; }
-/* decision tree */
-.step { background: #f8fafc; border: 1px solid #d4e6f1; border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; }
-.step .qtext { font-size: 15px; font-weight: 700; color: #1a5276; margin-bottom: 12px; }
-.step .opts { display: flex; gap: 10px; flex-wrap: wrap; }
-.opt { background: #fff; border: 2px solid #c0ccd8; border-radius: 8px; padding: 10px 16px; font-size: 13.5px; cursor: pointer; }
-.opt:hover { border-color: #2980b9; }
-.opt.selected { border-color: #1a5276; background: #eaf2f8; font-weight: 700; }
-.concl { background: #eafaf1; border-left: 4px solid #27ae60; border-radius: 0 8px 8px 0; padding: 12px 18px; margin-top: 12px; font-size: 14px; line-height: 1.9; display: none; }
-.concl.show { display: block; }
-.restart { background: #7f8c8d; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; cursor: pointer; margin-top: 10px; }
-/* generator */
-input[type="text"], textarea, select { padding: 9px 12px; border: 1px solid #c0ccd8; border-radius: 6px; font-size: 14px; width: 100%; margin-bottom: 10px; }
+.card { background: #fff; border: 1px solid #e2e8ef; border-radius: 12px; padding: 22px 26px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(12,36,64,.06); }
+.card h2 { color: #14375a; font-size: 18px; margin-bottom: 12px; }
+label { font-size: 13px; color: #555; display: block; margin-bottom: 4px; }
+input[type="text"], input[type="date"], select, textarea { padding: 9px 12px; border: 1px solid #c0ccd8; border-radius: 8px; font-size: 14px; width: 100%; max-width: 420px; margin-bottom: 10px; font-family: inherit; }
 textarea { min-height: 60px; }
-label { font-size: 13px; color: #555; display: block; margin-bottom: 3px; }
-.gen-btn { background: #1a5276; color: #fff; border: none; border-radius: 6px; padding: 10px 24px; font-size: 14px; cursor: pointer; }
-.gen-out { background: #fafbfc; border: 1px dashed #c0ccd8; border-radius: 8px; padding: 16px 20px; font-family: "SimSun", serif; font-size: 14px; line-height: 2.1; white-space: pre-wrap; margin-top: 14px; display: none; }
-/* checklist */
+.gen-btn { background: #14375a; color: #fff; border: none; border-radius: 8px; padding: 10px 26px; font-size: 14px; cursor: pointer; margin-top: 6px; transition: all .2s; }
+.gen-btn:hover { background: #1d4e7d; }
+.gen-out { background: #fafbfc; border: 1px dashed #c0ccd8; border-radius: 10px; padding: 18px 22px; font-family: "SimSun", serif; font-size: 14px; line-height: 2.1; white-space: pre-wrap; margin-top: 14px; display: none; }
+.tip { font-size: 12px; color: #8a97a5; margin-top: 8px; line-height: 1.8; }
+.tbl-ledger { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+.tbl-ledger th { background: #14375a; color: #fff; padding: 8px 10px; text-align: left; }
+.tbl-ledger td { padding: 8px 10px; border-bottom: 1px solid #e2e8ef; vertical-align: top; line-height: 1.7; }
+.tbl-ledger tr.warn { background: #fdf6e8; }
+.tbl-ledger tr.danger { background: #fbeeec; }
+.lv { display: inline-block; border-radius: 4px; padding: 1px 8px; font-size: 11px; font-weight: 700; }
+.lv-ok { background: #eaf6f1; color: #2e8b6d; }
+.lv-mid { background: #fdf6e8; color: #c8871e; }
+.lv-high { background: #fbeeec; color: #b4432c; }
+.small-btn { background: #eef4fa; border: 1px solid #d0d9e3; border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; color: #14375a; margin: 2px; }
+.small-btn:hover { background: #14375a; color: #fff; }
 .chk { margin-bottom: 8px; font-size: 14px; }
 .chk input { margin-right: 8px; }
-.chk.done label { text-decoration: line-through; color: #95a5a6; }
 .chk-result { background: #fef9e7; border: 1px solid #f1c40f; border-radius: 8px; padding: 14px 18px; margin-top: 14px; font-size: 14px; line-height: 2; display: none; }
-.chk-result.bad { background: #fdedec; border-color: #c0392b; }
-.chk-result.good { background: #eafaf1; border-color: #27ae60; }
-</style>
-<style>/* 统一设计覆盖：将各页内联旧配色对齐统一设计系统 */
-.card{border-radius:12px;border:1px solid #e2e8ef}
-.card h1,.card h2{color:#14375a}
-.card h3{color:#1d4e7d}
-table.rule th{background:#14375a}
-.head,.guide-head{background:linear-gradient(120deg,#0c2440,#14375a 60%,#1d4e7d)}
-.nav-links a{background:#eef4fa;color:#14375a}
-.tab.active,.gen-btn,.btn,.opt.selected{border-color:#14375a;background:#14375a}
-.btn:hover{background:#1d4e7d}
-.flow-step{background:#f0f4f9;border-color:#d0d9e3}
-.flow-step b{color:#14375a}
-.flow-step::after{color:#c9a25a}
-.step,.opt{border-color:#d0d9e3}
+.chk-result.bad { background: #fdedec; border-color: #b4432c; }
+.chk-result.good { background: #eafaf1; border-color: #2e8b6d; }
+@media print { .topbar, .sidebar, .tabs, .gen-btn, .tab, .staff-footer-note { display: none !important; } .wrap { padding: 0; } .card { box-shadow: none; border: none; } }
 </style>
 </head>
 <body>
-<div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="decision-wizard.html">决策向导</a><a href="tools.html" class="active">工具</a><a href="faq.html">问答</a><a href="defense-guide.html">复议诉讼</a><a href="related-laws.html">法条</a><a href="provenance.html">溯源</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="logo">政</span>
+      <span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span>
+    </a>
+    <nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="decision-wizard.html">决策向导</a><a href="tools.html" class="active">答复书自动生成器</a><a href="faq.html">问答</a><a href="defense-guide.html">复议诉讼</a><a href="related-laws.html">法条</a><a href="provenance.html">溯源</a><a href="staff/index.html" style="background:rgba(255,255,255,.15);border-radius:16px;">工作人员版</a></nav>
+    <button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button>
+  </div>
 </div>
-<div class="layout"><aside class="sidebar"><div class="side-title">目 录 · 机关处理指引</div><div class="grp">壹 · 办理流程</div><a href="guide.html"><span class="ic">01</span>简明办理指引</a><a href="reply-guide.html"><span class="ic">02</span>完整条文版指引</a><div class="grp">贰 · 文书与工具</div><a href="decision-wizard.html"><span class="ic">🧭</span>答复决策向导</a><a href="samples.html"><span class="ic">03</span>答复文书范文库</a><a href="templates.html"><span class="ic">04</span>程序文书模板</a><a href="calculator.html"><span class="ic">05</span>时限计算器</a><a href="tools.html" class="active"><span class="ic">06</span>交互工具包</a><div class="grp">叁 · 疑难解答</div><a href="faq.html"><span class="ic">07</span>疑难问答库</a><div class="grp">肆 · 复议诉讼</div><a href="defense-guide.html"><span class="ic">08</span>分类应诉方案</a><div class="grp">陆 · 法规附录</div><a href="related-laws.html"><span class="ic">09</span>配套法条库</a><a href="provenance.html"><span class="ic">10</span>溯源核验清单</a><a href="index.html"><span class="ic">11</span>法规库首页</a></aside><main class="main"><div class="wrap"><div class="head"><h1>文书生成与风险自查</h1><p>① <b>答复书生成器</b>：填写表单自动生成答复书初稿；② <b>风险自查清单</b>：逐项勾选核查，自动提示遗漏与风险。</p></div><div class="tabs"><button class="tab active" onclick="showTab(0)">文书生成器</button><button class="tab" onclick="showTab(1)">风险自查</button></div><!-- Tab 0: 文书生成器 --><div class="panel active" id="tab0"><div class="card"><h2>答复书生成器（初稿）</h2><label>机关名称</label><input type="text" id="g_org" placeholder="如：××街道办事处"><label>申请编号</label><input type="text" id="g_no" placeholder="如：××依复〔2026〕第1号"><label>申请人</label><input type="text" id="g_app" placeholder="如：张三"><label>收到申请日期</label><input type="text" id="g_date" placeholder="如：2026年3月1日"><label>答复类型</label><select id="g_type"><option value="1">① 予以公开</option><option value="2">② 已主动公开</option><option value="3">③ 不予公开</option><option value="4">④ 信息不存在</option><option value="5">⑤ 不属于本机关公开</option><option value="6">⑥ 已移交档案馆</option><option value="7">⑦ 部分公开（区分处理）</option><option value="16">⑯ 重复申请不予重复处理</option><option value="17">⑰ 工商/不动产等特别规定</option></select><label>申请公开的信息名称</label><input type="text" id="g_info" placeholder="如：××小区改造项目审批文件"><label>具体答复内容（选填，可补充说明）</label><textarea id="g_detail"></textarea><button class="gen-btn" onclick="genDoc()">生成答复书</button><div class="gen-out" id="genOut"></div><p style="font-size:12.5px;color:#7f8c8d;margin-top:10px">生成内容为初稿框架，正式发出前须经合法性审核；复议机关/法院名称请填写准确。</p></div></div><!-- Tab 1: 风险自查 --><div class="panel" id="tab1"><div class="card"><h2>办理风险自查清单（发出前逐项勾选）</h2><div id="chklist"></div><button class="gen-btn" onclick="checkRisk()">检查风险</button><div class="chk-result" id="chkResult"></div></div></div>
-</div><script>/* ===== Tab 切换 ===== */
+<div class="wrap">
+  <div class="head">
+    <h1>答复书自动生成器与办理工具</h1>
+    <p>① 按类型自动生成答复书（救济途径按"复议前置/复议或诉讼"自动区分）；② 在办案件台账（自动倒排、临期预警）；③ 检索记录一键生成（"信息不存在"留痕必备）；④ 发出前风险自查。</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab(0)">① 答复书生成</button>
+    <button class="tab" onclick="showTab(1)">② 在办台账</button>
+    <button class="tab" onclick="showTab(2)">③ 检索留痕</button>
+    <button class="tab" onclick="showTab(3)">④ 风险自查</button>
+  </div>
+
+  <!-- Tab 0: 答复书生成器 -->
+  <div class="panel active" id="tab0">
+    <div class="card">
+      <h2>答复书生成器</h2>
+      <label>答复类型（自动匹配正文与救济告知）</label>
+      <select id="g_type">
+        <option value="1">予以公开（条例第36条(二)）</option>
+        <option value="2">已主动公开（条例第36条(一)）</option>
+        <option value="3">不予公开（条例第36条(三) + 复议前置告知）</option>
+        <option value="4">信息不存在（条例第36条(四)，附检索留痕）</option>
+        <option value="5">不属于本机关公开（条例第36条(五)）</option>
+        <option value="6">部分公开·区分处理（条例第37条 + 复议前置告知）</option>
+        <option value="7">补正告知书（条例第30条）</option>
+        <option value="8">已移交档案馆（国办公开办函〔2019〕14号）</option>
+      </select>
+      <label>机关名称</label><input type="text" id="g_org" placeholder="例：重庆市两江新区金山街道办事处">
+      <label>文号</label><input type="text" id="g_no" placeholder="例：金街依复〔2026〕第X号">
+      <label>申请人</label><input type="text" id="g_app" placeholder="申请人姓名/名称">
+      <label>申请日期</label><input type="date" id="g_date">
+      <label>申请内容（信息名称/事项）</label><textarea id="g_info" placeholder="例：×××项目的批复文件"></textarea>
+      <div id="g_extra" style="display:none">
+        <label>补充信息（按类型填写：不予公开理由 / 检索范围与关键词 / 负责公开机关 / 可公开部分等）</label>
+        <textarea id="g_extraTxt"></textarea>
+      </div>
+      <button class="gen-btn" onclick="genDoc()">生成答复书</button>
+      <div class="gen-out" id="genOut"></div>
+      <p class="tip">生成内容为初稿框架，正式发出前须经合法性审核；"不予公开""部分公开"类自动写入复议前置告知（先申请行政复议）；答复书须加盖公章并留存送达凭证。</p>
+    </div>
+  </div>
+
+  <!-- Tab 1: 在办台账 -->
+  <div class="panel" id="tab1">
+    <div class="card">
+      <h2>在办案件台账（本机保存，自动倒排预警）</h2>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+        <div><label>申请编号</label><input type="text" id="l_id" style="width:130px"></div>
+        <div><label>申请人</label><input type="text" id="l_app" style="width:140px"></div>
+        <div><label>收到日期</label><input type="date" id="l_date" style="width:150px"></div>
+        <div><label>申请事项（简述）</label><input type="text" id="l_info" style="width:220px"></div>
+        <div><label>答复类型</label>
+          <select id="l_type" style="width:150px">
+            <option value="予以公开">予以公开</option>
+            <option value="不予公开">不予公开</option>
+            <option value="信息不存在">信息不存在</option>
+            <option value="不属于本机关">不属于本机关</option>
+            <option value="部分公开">部分公开</option>
+            <option value="补正">补正</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <button class="gen-btn" onclick="addLedger()">加入台账</button>
+      </div>
+      <div id="ledgerList"></div>
+    </div>
+  </div>
+
+  <!-- Tab 2: 检索留痕 -->
+  <div class="panel" id="tab2">
+    <div class="card">
+      <h2>检索记录生成器（"信息不存在"类答复必备留痕）</h2>
+      <label>申请编号</label><input type="text" id="s_id">
+      <label>申请公开的信息名称</label><input type="text" id="s_info">
+      <label>检索范围（纸质档案/电子档案/公文系统/门户网站等全部载体）</label><input type="text" id="s_scope" placeholder="例：纸质档案、电子档案、公文系统、门户网站">
+      <label>检索关键词（≥2组，含同义词、规范名称）</label><input type="text" id="s_kw" placeholder="例：×××、×××（规范名称）、文号">
+      <label>检索路径/系统</label><input type="text" id="s_path" placeholder="例：档案管理系统×库、OA公文检索">
+      <label>检索结果</label><textarea id="s_result" placeholder="例：未检索到所申请信息；发现相似材料×××，经核对与申请事项不符"></textarea>
+      <label>检索人</label><input type="text" id="s_user">
+      <label>检索日期</label><input type="date" id="s_date">
+      <button class="gen-btn" onclick="genSearch()">生成检索记录表</button>
+      <div class="gen-out" id="sOut"></div>
+      <p class="tip">生成后打印或复制，随卷归档；检索人签字、经办人复核。</p>
+    </div>
+  </div>
+
+  <!-- Tab 3: 风险自查 -->
+  <div class="panel" id="tab3">
+    <div class="card">
+      <h2>发出前风险自查（逐项勾选）</h2>
+      <div id="chklist"></div>
+      <button class="gen-btn" onclick="checkRisk()">检查风险</button>
+      <div class="chk-result" id="chkResult"></div>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="f-title">政府信息公开事项机关处理指引</div>
+  依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制 · 全部法条均引自官方公开发布原文<br>
+  内部工作指引 · 供两江新区各机关政府信息公开工作人员使用 · 可离线运行
+</footer>
+
+<script>
+/* ===== Tab 切换 ===== */
 function showTab(i) {
-  document.querySelectorAll('.tab').forEach((t, idx) =>t.classList.toggle('active', idx === i));
-  document.querySelectorAll('.panel').forEach((p, idx) =>p.classList.toggle('active', idx === i));
+  document.querySelectorAll('.tab').forEach((t, idx) => t.classList.toggle('active', idx === i));
+  document.querySelectorAll('.panel').forEach((p, idx) => p.classList.toggle('active', idx === i));
 }
 
-/* ===== 文书生成器 ===== */
+/* ===== 答复书生成器（8 类，救济告知自动区分）===== */
+const REMEDY_PRE = '\u3000\u3000如对本答复不服，依《中华人民共和国行政复议法》第二十三条第一款第（四）项的规定，请自收到本答复之日起60日内先向【复议机关名称：对本级政府工作部门的答复不服的，向本级人民政府申请复议；垂直管理部门除外】申请行政复议；对行政复议决定不服的，可以自收到行政复议决定书之日起15日内依法向人民法院提起行政诉讼。';
+const REMEDY_NORMAL = '\u3000\u3000如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。';
+
 function genDoc() {
-  const org = document.getElementById('g_org').value || '【机关名称】';
-  const no = document.getElementById('g_no').value || '【文号】';
-  const app = document.getElementById('g_app').value || '【申请人】';
-  const date = document.getElementById('g_date').value || '【×年×月×日】';
-  const info = document.getElementById('g_info').value || '【信息名称】';
   const type = document.getElementById('g_type').value;
-  const det = document.getElementById('g_detail').value;
-  let relief = '如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。';
-  if (type === "3") {
-    relief = '如对本答复不服，根据《中华人民共和国行政复议法》第二十三条第（四）项，应当先向【复议机关名称】申请行政复议（申请期限：收到本答复之日起60日内）；对行政复议决定不服的，可以自收到复议决定书之日起十五日内向【人民法院名称】提起行政诉讼。';
+  const org = document.getElementById('g_org').value || '【机关名称】';
+  const no = document.getElementById('g_no').value || '【文号：×××依复〔20××〕第×号】';
+  const app = document.getElementById('g_app').value || '【申请人姓名/名称】';
+  const date = document.getElementById('g_date').value || '【×年×月×日】';
+  const info = document.getElementById('g_info').value || '【申请公开的信息名称/事项】';
+  const extra = document.getElementById('g_extraTxt').value;
+  let body = '', remedy = REMEDY_NORMAL, basis = '';
+  switch (type) {
+    case '1':
+      body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '可以公开。现随答复提供（或：可通过【获取方式、途径和时间】获取）。';
+      basis = '《中华人民共和国政府信息公开条例》第三十六条第（二）项';
+      break;
+    case '2':
+      body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '本机关已主动公开，可通过【公开网址/查阅地点】获取。';
+      basis = '《中华人民共和国政府信息公开条例》第三十六条第（一）项';
+      break;
+    case '3':
+      body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '，依据《中华人民共和国政府信息公开条例》第【十四/十五/十六】条第【×】款的规定，属于【不予公开情形表述】' + (extra ? '。理由如下：' + extra : '') + '。';
+      basis = '《中华人民共和国政府信息公开条例》第三十六条第（三）项、第14—16条';
+      remedy = REMEDY_PRE;
+      break;
+    case '4':
+      body = '\u3000\u3000经检索，本机关在【检索范围：' + (extra || '纸质档案、电子档案、公文系统、门户网站等全部载体') + '】中以【检索关键词：×××、×××（不少于2组）】进行了全面检索，未发现你（单位）申请公开的' + info + '。';
+      basis = '《中华人民共和国政府信息公开条例》第三十六条第（四）项';
+      break;
+    case '5':
+      body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '不属于本行政机关负责公开，理由：【说明理由】' + (extra ? '。该信息负责公开机关为：' + extra : '') + '。';
+      basis = '《中华人民共和国政府信息公开条例》第三十六条第（五）项';
+      break;
+    case '6':
+      body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '中含有不应当公开的内容，但可以作区分处理。现提供可以公开的内容如下：【可公开内容】' + (extra ? '；对不予公开的部分【' + extra + '】' : '') + '，理由：【说明理由】。';
+      basis = '《中华人民共和国政府信息公开条例》第三十七条';
+      remedy = REMEDY_PRE;
+      break;
+    case '7':
+      body = '\u3000\u3000经审查，你（单位）提出的申请内容不明确，依据《中华人民共和国政府信息公开条例》第三十条的规定，请于收到本告知书之日起【×】个工作日内一次性补正下列事项：1.【补正事项】；2.【补正事项】。补正期限自收到补正材料之日起重新计算；无正当理由逾期不补正的，视为放弃申请。';
+      basis = '《中华人民共和国政府信息公开条例》第三十条';
+      remedy = '';
+      break;
+    case '8':
+      body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '已依法移交国家档案馆、成为国家档案，依据国办公开办函〔2019〕14号及《中华人民共和国档案法》的规定，请向【档案馆名称】申请查阅。';
+      basis = '国办公开办函〔2019〕14号第四点；《中华人民共和国档案法》';
+      break;
   }
-  const body = {
-    "1": '经审查，你（单位）申请公开的' + info + '属于可以公开的政府信息。依据《中华人民共和国政府信息公开条例》第三十六条第（二）项的规定，现向你（单位）提供该政府信息（或：告知获取该政府信息的方式、途径和时间：×××）。',
-    "2": '经审查，你（单位）申请公开的' + info + '，本机关已主动公开。依据《中华人民共和国政府信息公开条例》第三十六条第（一）项的规定，现告知你（单位）获取该政府信息的方式、途径如下：【公开网址：×××】。',
-    "3": '经审查，你（单位）申请公开的' + info + '，依据《中华人民共和国政府信息公开条例》第【十四/十五/十六】条第【×】款的规定，属于【不予公开情形】，决定不予公开。理由如下：【逐项说明】。',
-    "4": '经检索，本机关在【检索范围】中以【检索关键词，不少于2组】进行了全面检索（检索时间：【×年×月×日】），未发现你（单位）申请公开的' + info + '。依据《中华人民共和国政府信息公开条例》第三十六条第（四）项的规定，告知你（单位）该政府信息不存在。',
-    "5": '经审查，你（单位）申请公开的' + info + '，依据【职责依据】不属于本机关负责公开。依据《中华人民共和国政府信息公开条例》第三十六条第（五）项的规定，现告知你（单位）：【该政府信息由××机关负责公开，联系方式：×××】。',
-    "6": '经审查，你（单位）申请公开的' + info + '已依法移交【档案馆名称】。依据《中华人民共和国档案法》及有关规定，现告知你（单位）依法向【档案馆名称】申请查阅（地址：×××）。',
-    "7": '经审查，你（单位）申请公开的' + info + '中含有【不应当公开的内容】，但可以作区分处理。依据《中华人民共和国政府信息公开条例》第三十七条，现向你（单位）提供可以公开的内容如下：【×××】；对不予公开的部分，理由为：【×××】。',
-    "16": '经审查，你（单位）申请公开的' + info + '与本机关【×年×月×日】作出的【文号】答复所涉信息相同。依据《中华人民共和国政府信息公开条例》第三十六条第（六）项的规定，告知你（单位）不予重复处理。',
-    "17": '经审查，你（单位）申请获取的' + info + '属于特定行政管理领域的业务查询事项。依据《中华人民共和国政府信息公开条例》第三十六条第（七）项及有关规定，请你（单位）依照【专门法律法规名称】的规定，向【办理机关】申请查询（地址：×××）。'
-  }[type];
-  const text = org + '政府信息公开申请答复书\n' + no + '\n\n' + app + '：\n    你（单位）于' + date + '提出的政府信息公开申请（申请编号：【×××】）收悉。\n    ' + body + (det ? '\n    ' + det : '') + '\n    ' + relief + '\n\n' + ' '.repeat(40) + org + '（盖章）\n' + ' '.repeat(40) + '【×年×月×日】';
   const out = document.getElementById('genOut');
-  out.textContent = text;
+  out.innerHTML = org + '政府信息公开申请答复书' + '\n' + no + '\n\n' + app + '：\n' +
+    '\u3000\u3000你（单位）于' + date + '提出的政府信息公开申请（申请编号：【×××】）收悉。\n' +
+    body + '\n' +
+    (basis ? '\u3000\u3000依据' + basis + '，告知你（单位）如下。\n' : '') +
+    (remedy ? remedy + '\n' : '') +
+    '\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000' + org + '（盖章）\n' +
+    '\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000【×年×月×日】';
   out.style.display = 'block';
 }
 
-/* ===== 风险自查清单 ===== */
-const checks = [
-  "已确认收到申请之日（条例第31条：当面=提交日，邮寄=签收日，网络/传真=确认日）",
-  "收件当日完成登记并倒排工期",
-  "申请内容不明确的已在7个工作日内一次性告知补正（未多次补正）",
-  "已逐项研判：是否政府信息→是否本单位职责→是否应存在→是否应公开",
-  "涉及检索的已全面检索并留痕（检索记录表：范围/关键词≥2组/结果/检索人/日期）",
-  "答复前已复核：该信息是否曾主动公开、既往答复是否涉及、前后结论一致",
-  "不予公开的已逐项说明理由并引用具体条文（条例第14/15/16条）",
-  "可区分处理的已作区分处理（未整体拒绝）",
-  "涉第三方权益的已书面征求第三方意见并留存（未仅电话沟通）",
-  "需延长的已经负责人同意并在届满前告知申请人",
-  "答复初稿已在第10个工作日前送司法所/法律顾问审核并取得书面意见",
-  "答复书已包含救济途径告知（60日复议/6个月诉讼；不予公开类须先申请行政复议）",
-  "已按规范送达（直接/委托/邮政EMS，非其他快递）并留存送达凭证",
-  "已告知负责公开机关的名称和联系方式（"不属于本机关"类）",
-  "一案一卷归档材料已备齐（收文/研判/检索/文稿/审核/签发/送达）"
-];
-function buildChk() {
-  const box = document.getElementById('chklist');
-  box.innerHTML = '';
-  checks.forEach((c, i) =>{
-    const div = document.createElement('div');
-    div.className = 'chk';
-    div.innerHTML = '<input type="checkbox" id="c' + i + '"><label for="c' + i + '">' + c + '</label>';
-    div.querySelector('input').addEventListener('change', function(){
-      div.classList.toggle('done', this.checked);
-    });
-    box.appendChild(div);
-  });
+/* 类型切换显示补充信息框 */
+document.getElementById('g_type').addEventListener('change', function() {
+  const show = ['3','4','5','6'].includes(this.value);
+  document.getElementById('g_extra').style.display = show ? 'block' : 'none';
+});
+
+/* ===== 在办台账（localStorage）===== */
+function loadLedger() {
+  try { return JSON.parse(localStorage.getItem('zfxxgk_ledger') || '[]'); } catch(e) { return []; }
 }
-function checkRisk() {
-  const unchecked = [];
-  checks.forEach((c, i) =>{
-    const el = document.getElementById('c' + i);
-    if (el && !el.checked) unchecked.push(c);
+function saveLedger(list) { localStorage.setItem('zfxxgk_ledger', JSON.stringify(list)); }
+const WDAYS = 20;
+function addWorkdays(start, n) { let d = new Date(start); let c = 0; while (c < n) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0 && d.getDay() !== 6) c++; } return d; }
+function fmtD(d) { const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), dd = String(d.getDate()).padStart(2,'0'); return y + '-' + m + '-' + dd; }
+function addLedger() {
+  const id = document.getElementById('l_id').value.trim();
+  const app = document.getElementById('l_app').value.trim();
+  const date = document.getElementById('l_date').value;
+  const info = document.getElementById('l_info').value.trim();
+  const type = document.getElementById('l_type').value;
+  if (!date) { alert('请选择收到日期'); return; }
+  const list = loadLedger();
+  list.push({ id: id || ('案' + (list.length + 1)), app, date, info, type, status: '办理中', created: Date.now() });
+  saveLedger(list);
+  renderLedger();
+  document.getElementById('l_id').value = ''; document.getElementById('l_app').value = ''; document.getElementById('l_info').value = '';
+}
+function renderLedger() {
+  const list = loadLedger();
+  const box = document.getElementById('ledgerList');
+  if (!list.length) { box.innerHTML = '<p style="color:#8a97a5;font-size:13px;margin-top:10px">台账为空。登记收件后自动计算 20 个工作日截止日并临期预警（本机保存）。</p>'; return; }
+  const today = new Date(); today.setHours(0,0,0,0);
+  let h = '<table class="tbl-ledger"><tr><th>编号</th><th>申请人</th><th>事项</th><th>收到日期</th><th>20日截止</th><th>剩余</th><th>类型</th><th>状态</th><th>操作</th></tr>';
+  list.forEach((it, idx) => {
+    const start = new Date(it.date + 'T00:00:00');
+    const due = addWorkdays(start, WDAYS);
+    const left = Math.ceil((due - today) / 86400000);
+    let cls = '', lv = '<span class="lv lv-ok">正常</span>';
+    if (left <= 0) { cls = 'danger'; lv = '<span class="lv lv-high">已超期</span>'; }
+    else if (left <= 5) { cls = 'warn'; lv = '<span class="lv lv-mid">临期</span>'; }
+    else if (left <= 10) { lv = '<span class="lv lv-mid">' + left + '天</span>'; }
+    else { lv = '<span class="lv lv-ok">' + left + '天</span>'; }
+    h += '<tr class="' + cls + '"><td>' + (it.id || '') + '</td><td>' + (it.app || '') + '</td><td>' + (it.info || '') + '</td><td>' + it.date + '</td><td>' + fmtD(due) + '</td><td>' + lv + '</td><td>' + it.type + '</td><td>' + it.status + '</td><td><button class="small-btn" onclick="setDone(' + idx + ')">办结</button> <button class="small-btn" onclick="delLedger(' + idx + ')">删除</button></td></tr>';
   });
-  const box = document.getElementById('chkResult');
-  if (unchecked.length === 0) {
-    box.className = 'chk-result good';
-    box.innerHTML = ' 全部自查项已确认，可以发出答复。';
-  } else {
-    box.className = 'chk-result bad';
-    box.innerHTML = ' 以下 ' + unchecked.length + ' 项未确认，发出前务必落实：<br>' + unchecked.map((x, i) =>(i + 1) + '. ' + x).join('<br>');
-  }
-  box.style.display = 'block';
+  h += '</table>';
+  box.innerHTML = h;
+}
+function setDone(idx) { const list = loadLedger(); list[idx].status = '已办结'; saveLedger(list); renderLedger(); }
+function delLedger(idx) { const list = loadLedger(); list.splice(idx, 1); saveLedger(list); renderLedger(); }
+
+/* ===== 检索记录生成器 ===== */
+function genSearch() {
+  const id = document.getElementById('s_id').value || '【申请编号】';
+  const info = document.getElementById('s_info').value || '【申请公开的信息名称】';
+  const scope = document.getElementById('s_scope').value || '【检索范围】';
+  const kw = document.getElementById('s_kw').value || '【检索关键词】';
+  const path = document.getElementById('s_path').value || '【检索路径/系统】';
+  const result = document.getElementById('s_result').value || '【检索结果】';
+  const user = document.getElementById('s_user').value || '【检索人】';
+  const date = document.getElementById('s_date').value || '【检索日期】';
+  const out = document.getElementById('sOut');
+  out.innerHTML = '政府信息公开检索记录表\n（"信息不存在"类答复必备证据，随卷归档）\n\n' +
+    '申请编号：' + id + '\n申请公开的信息名称：' + info + '\n\n' +
+    '一、检索范围：' + scope + '\n' +
+    '二、检索关键词：' + kw + '\n' +
+    '三、检索路径/系统：' + path + '\n' +
+    '四、检索结果：' + result + '\n\n' +
+    '检索人（签字）：' + user + '\u3000\u3000检索日期：' + date + '\n' +
+    '经办人复核（签字）：\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000日期：';
+  out.style.display = 'block';
 }
 
-buildChk();
+/* ===== 风险自查 ===== */
+const CHECKS = [
+  '未超期答复或逾期不答复（20+20个工作日；网络申请当日查收）',
+  '"信息不存在"有完整检索留痕（范围/关键词≥2组/结果/检索人/日期）',
+  '检索关键词已扩展同义词、规范名称',
+  '不予公开已逐项说明理由并引用具体条文',
+  '涉商业秘密/个人隐私已书面征求第三方意见并留痕',
+  '可区分处理的已区分处理，未整体拒绝',
+  '已逐项答复全部申请事项，无遗漏、无答非所问',
+  '补正程序合法（一次性告知、期限合理、书面作出）',
+  '确不属于本机关公开的已说明理由并告知负责机关',
+  '答复书已告知救济途径（60日复议/6个月诉讼）',
+  '"不予公开"类已告知先申请行政复议（复议前置）',
+  '送达方式合法（邮政EMS）且有送达凭证',
+  '答复结论前后一致，无"前期称无、后期检出"矛盾',
+  '法条引用与答复结论匹配，精确到条项',
+  '程序文书（补正/延期/征求意见）已书面作出并归档'
+];
+(function() {
+  const box = document.getElementById('chklist');
+  box.innerHTML = CHECKS.map((c, i) => '<div class="chk"><input type="checkbox" id="ck' + i + '"><label for="ck' + i + '">' + c + '</label></div>').join('');
+})();
+function checkRisk() {
+  const un = [];
+  CHECKS.forEach((c, i) => { if (!document.getElementById('ck' + i).checked) un.push(c); });
+  const r = document.getElementById('chkResult');
+  if (un.length === 0) { r.className = 'chk-result good'; r.innerHTML = '<b>全部通过。</b>可以签发；仍须经合法性审核并留存送达凭证。'; }
+  else { r.className = 'chk-result bad'; r.innerHTML = '<b>以下 ' + un.length + ' 项未完成，请补正后再发出：</b><br>' + un.map((c, i) => (i + 1) + '. ' + c).join('<br>'); }
+  r.style.display = 'block';
+}
+
+renderLedger();
 </script>
-</main>
-</div>
-<footer class="footer"><div class="f-title">政府信息公开事项机关处理指引</div>依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制 · 全部法条均引自官方公开发布原文<br>内部工作指引 · 供两江新区各机关政府信息公开工作人员使用 · 可离线运行
-</footer>
-<a href="staff/index.html" class="ver-fab"><span class="ic">👥</span>工作人员速查版</a>
 </body>
 </html>
