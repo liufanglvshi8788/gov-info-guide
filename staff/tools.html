@@ -48,6 +48,21 @@
   </div>
 
   <div class="tool-box">
+  <h3>① 答复书快速生成（最常见 3 类，自动写对救济告知）</h3>
+  <label>答复类型</label>
+  <select id="q_type">
+    <option value="open">予以公开</option>
+    <option value="nopen">不予公开（自动写"先申请行政复议"）</option>
+    <option value="miss">信息不存在（附检索留痕提示）</option>
+  </select>
+  <label>机关名称</label><input type="text" id="q_org" placeholder="例：金山街道办事处" style="max-width:320px">
+  <label>申请人</label><input type="text" id="q_app" placeholder="申请人姓名/名称" style="max-width:320px">
+  <label>申请日期</label><input type="date" id="q_date">
+  <label>申请内容</label><input type="text" id="q_info" placeholder="申请公开的信息名称" style="max-width:420px">
+  <button class="btn" onclick="genQuick()">生成答复书</button>
+  <div class="result-box" id="qOut" style="white-space:pre-wrap;font-family:'SimSun',serif;font-size:13.5px;line-height:2"></div>
+</div>
+  <div class="tool-box">
     <h3>① 答复时限计算器</h3>
     <label>收到申请日期（按条例第31条认定）</label>
     <input type="date" id="recv">
@@ -75,6 +90,20 @@ const holidays = []; // 如需排除法定节假日，在此配置，如 "2026-1
 function isWorkday(d) { const day = d.getDay(); if (day === 0 || day === 6) return false; if (holidays.includes(d.toISOString().slice(0,10))) return false; return true; }
 function addWorkdays(start, n) { let d = new Date(start); let c = 0; while (c < n) { d.setDate(d.getDate() + 1); if (isWorkday(d)) c++; } return d; }
 function fmt(d) { const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), dd = String(d.getDate()).padStart(2,'0'); const w = ['日','一','二','三','四','五','六'][d.getDay()]; return y + '-' + m + '-' + dd + '（周' + w + '）'; }
+function genQuick() {
+  const type = document.getElementById('q_type').value;
+  const org = document.getElementById('q_org').value || '【机关名称】';
+  const app = document.getElementById('q_app').value || '【申请人】';
+  const date = document.getElementById('q_date').value || '【日期】';
+  const info = document.getElementById('q_info').value || '【信息名称】';
+  let body = '', remedy = '如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。';
+  if (type === 'open') body = '经审查，你（单位）申请公开的' + info + '可以公开。现随答复提供（或：可通过【获取方式、途径和时间】获取）。依据《政府信息公开条例》第三十六条第（二）项。';
+  else if (type === 'nopen') { body = '经审查，你（单位）申请公开的' + info + '，依据《政府信息公开条例》第【十四/十五/十六】条第【×】款的规定，属于【不予公开情形】，决定不予公开。理由：【说明理由】。'; remedy = '如对本答复不服，依《行政复议法》第二十三条第一款第（四）项的规定，请自收到本答复之日起60日内先向【复议机关名称】申请行政复议；对行政复议决定不服的，可以自收到行政复议决定书之日起15日内依法向人民法院提起行政诉讼。'; }
+  else body = '经检索，本机关在【纸质档案、电子档案、公文系统、门户网站等全部载体】中以【关键词≥2组】进行了全面检索，未发现你（单位）申请公开的' + info + '。依据《政府信息公开条例》第三十六条第（四）项，告知该政府信息不存在（检索记录随卷归档）。';
+  const out = document.getElementById('qOut');
+  out.innerHTML = org + '政府信息公开申请答复书\n' + app + '：\n你（单位）于' + date + '提出的政府信息公开申请收悉。\n' + body + '\n' + remedy + '\n\n' + org + '（盖章）\n【×年×月×日】';
+  out.style.display = 'block';
+}
 function calcStaff() {
   const recv = new Date(document.getElementById('recv').value + 'T00:00:00');
   if (isNaN(recv)) { alert('请选择收到申请日期'); return; }

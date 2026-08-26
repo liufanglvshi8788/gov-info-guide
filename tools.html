@@ -18,23 +18,19 @@
 .card { background: #fff; border: 1px solid #e2e8ef; border-radius: 12px; padding: 22px 26px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(12,36,64,.06); }
 .card h2 { color: #14375a; font-size: 18px; margin-bottom: 12px; }
 label { font-size: 13px; color: #555; display: block; margin-bottom: 4px; }
-input[type="text"], input[type="date"], select, textarea { padding: 9px 12px; border: 1px solid #c0ccd8; border-radius: 8px; font-size: 14px; width: 100%; max-width: 420px; margin-bottom: 10px; font-family: inherit; }
+input[type="text"], input[type="date"], input[type="number"], select, textarea { padding: 9px 12px; border: 1px solid #c0ccd8; border-radius: 8px; font-size: 14px; width: 100%; max-width: 420px; margin-bottom: 10px; font-family: inherit; }
 textarea { min-height: 60px; }
 .gen-btn { background: #14375a; color: #fff; border: none; border-radius: 8px; padding: 10px 26px; font-size: 14px; cursor: pointer; margin-top: 6px; transition: all .2s; }
 .gen-btn:hover { background: #1d4e7d; }
 .gen-out { background: #fafbfc; border: 1px dashed #c0ccd8; border-radius: 10px; padding: 18px 22px; font-family: "SimSun", serif; font-size: 14px; line-height: 2.1; white-space: pre-wrap; margin-top: 14px; display: none; }
 .tip { font-size: 12px; color: #8a97a5; margin-top: 8px; line-height: 1.8; }
-.tbl-ledger { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
-.tbl-ledger th { background: #14375a; color: #fff; padding: 8px 10px; text-align: left; }
-.tbl-ledger td { padding: 8px 10px; border-bottom: 1px solid #e2e8ef; vertical-align: top; line-height: 1.7; }
-.tbl-ledger tr.warn { background: #fdf6e8; }
-.tbl-ledger tr.danger { background: #fbeeec; }
-.lv { display: inline-block; border-radius: 4px; padding: 1px 8px; font-size: 11px; font-weight: 700; }
-.lv-ok { background: #eaf6f1; color: #2e8b6d; }
-.lv-mid { background: #fdf6e8; color: #c8871e; }
-.lv-high { background: #fbeeec; color: #b4432c; }
-.small-btn { background: #eef4fa; border: 1px solid #d0d9e3; border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; color: #14375a; margin: 2px; }
-.small-btn:hover { background: #14375a; color: #fff; }
+.fee-box { background: #eef4fb; border-radius: 10px; padding: 14px 18px; margin-top: 12px; font-size: 14px; line-height: 2; display: none; }
+.fee-box b { color: #14375a; font-size: 18px; }
+.ck-list { margin-top: 10px; }
+.ck-item { padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; font-size: 13.5px; line-height: 1.8; }
+.ck-ok { background: #eaf6f1; color: #1d5341; }
+.ck-bad { background: #fbeeec; color: #6b2a1c; }
+.ck-warn { background: #fdf6e8; color: #6b4a12; }
 .chk { margin-bottom: 8px; font-size: 14px; }
 .chk input { margin-right: 8px; }
 .chk-result { background: #fef9e7; border: 1px solid #f1c40f; border-radius: 8px; padding: 14px 18px; margin-top: 14px; font-size: 14px; line-height: 2; display: none; }
@@ -56,15 +52,16 @@ textarea { min-height: 60px; }
 </div>
 <div class="wrap">
   <div class="head">
-    <h1>答复书自动生成器与办理工具</h1>
-    <p>① 按类型自动生成答复书（救济途径按"复议前置/复议或诉讼"自动区分）；② 在办案件台账（自动倒排、临期预警）；③ 检索记录一键生成（"信息不存在"留痕必备）；④ 发出前风险自查。</p>
+    <h1>答复书自动生成器与配套工具</h1>
+    <p>① 按类型自动生成答复书（救济途径自动区分复议前置）；② 信息处理费计算（按件/按量，超额累进）；③ 检索记录一键生成；④ 答复书要素智能检查；⑤ 发出前风险自查。</p>
   </div>
 
   <div class="tabs">
     <button class="tab active" onclick="showTab(0)">① 答复书生成</button>
-    <button class="tab" onclick="showTab(1)">② 在办台账</button>
+    <button class="tab" onclick="showTab(1)">② 收费计算</button>
     <button class="tab" onclick="showTab(2)">③ 检索留痕</button>
-    <button class="tab" onclick="showTab(3)">④ 风险自查</button>
+    <button class="tab" onclick="showTab(3)">④ 要素检查</button>
+    <button class="tab" onclick="showTab(4)">⑤ 风险自查</button>
   </div>
 
   <!-- Tab 0: 答复书生成器 -->
@@ -87,39 +84,42 @@ textarea { min-height: 60px; }
       <label>申请人</label><input type="text" id="g_app" placeholder="申请人姓名/名称">
       <label>申请日期</label><input type="date" id="g_date">
       <label>申请内容（信息名称/事项）</label><textarea id="g_info" placeholder="例：×××项目的批复文件"></textarea>
+      <div id="g_bz" style="display:none">
+        <label>补正期限（工作日，条例第30条要求合理期限）</label>
+        <input type="number" id="g_bzDays" value="10" min="5" max="30" style="max-width:120px">
+        <label style="display:inline;margin-left:10px">补正材料收到日期（可选，用于自动计算重新起算的答复截止日）</label>
+        <input type="date" id="g_bzDate" style="max-width:170px;display:inline">
+      </div>
       <div id="g_extra" style="display:none">
         <label>补充信息（按类型填写：不予公开理由 / 检索范围与关键词 / 负责公开机关 / 可公开部分等）</label>
         <textarea id="g_extraTxt"></textarea>
       </div>
       <button class="gen-btn" onclick="genDoc()">生成答复书</button>
       <div class="gen-out" id="genOut"></div>
-      <p class="tip">生成内容为初稿框架，正式发出前须经合法性审核；"不予公开""部分公开"类自动写入复议前置告知（先申请行政复议）；答复书须加盖公章并留存送达凭证。</p>
+      <p class="tip">生成内容为初稿框架，正式发出前须经合法性审核；"不予公开""部分公开"类自动写入复议前置告知；补正类自动计算补正后重新起算的答复截止日；答复书须加盖公章并留存送达凭证。</p>
     </div>
   </div>
 
-  <!-- Tab 1: 在办台账 -->
+  <!-- Tab 1: 收费计算器 -->
   <div class="panel" id="tab1">
     <div class="card">
-      <h2>在办案件台账（本机保存，自动倒排预警）</h2>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
-        <div><label>申请编号</label><input type="text" id="l_id" style="width:130px"></div>
-        <div><label>申请人</label><input type="text" id="l_app" style="width:140px"></div>
-        <div><label>收到日期</label><input type="date" id="l_date" style="width:150px"></div>
-        <div><label>申请事项（简述）</label><input type="text" id="l_info" style="width:220px"></div>
-        <div><label>答复类型</label>
-          <select id="l_type" style="width:150px">
-            <option value="予以公开">予以公开</option>
-            <option value="不予公开">不予公开</option>
-            <option value="信息不存在">信息不存在</option>
-            <option value="不属于本机关">不属于本机关</option>
-            <option value="部分公开">部分公开</option>
-            <option value="补正">补正</option>
-            <option value="其他">其他</option>
-          </select>
-        </div>
-        <button class="gen-btn" onclick="addLedger()">加入台账</button>
+      <h2>信息处理费计算器（国办函〔2020〕109号，超额累进）</h2>
+      <label>计收方式</label>
+      <select id="f_mode">
+        <option value="piece">按件计收（同一申请人一个自然月累计件数）</option>
+        <option value="page">按量计收（单件申请提供页数）</option>
+      </select>
+      <div id="f_piece">
+        <label>自然月累计申请件数</label>
+        <input type="number" id="f_n" min="0" value="15">
       </div>
-      <div id="ledgerList"></div>
+      <div id="f_page" style="display:none">
+        <label>提供页数（A4单面为1页）</label>
+        <input type="number" id="f_p" min="0" value="50">
+      </div>
+      <button class="gen-btn" onclick="calcFee()">计算信息处理费</button>
+      <div class="fee-box" id="feeOut"></div>
+      <p class="tip">标准（办法第4、5条）：按件——10件以下（含）不收费，11—30件部分100元/件，31件以上每增加一档提高100元/件；按量——30页以下（含）不收费，31—100页部分10元/页，101—200页部分20元/页，201页以上40元/页。收费通知应在申请处理期限内发出；申请人自收到通知次日起20个工作日内缴费，逾期未缴视为放弃。</p>
     </div>
   </div>
 
@@ -141,8 +141,19 @@ textarea { min-height: 60px; }
     </div>
   </div>
 
-  <!-- Tab 3: 风险自查 -->
+  <!-- Tab 3: 要素智能检查 -->
   <div class="panel" id="tab3">
+    <div class="card">
+      <h2>答复书要素智能检查</h2>
+      <p style="font-size:13px;color:#5c6b7a;margin-bottom:10px">粘贴答复书全文（含正文与救济告知），自动检查必备要素并提示缺失项。</p>
+      <textarea id="c_text" style="min-height:220px" placeholder="在此粘贴答复书全文…"></textarea>
+      <button class="gen-btn" onclick="checkDoc()">开始检查</button>
+      <div class="ck-list" id="cOut"></div>
+    </div>
+  </div>
+
+  <!-- Tab 4: 风险自查 -->
+  <div class="panel" id="tab4">
     <div class="card">
       <h2>发出前风险自查（逐项勾选）</h2>
       <div id="chklist"></div>
@@ -164,9 +175,13 @@ function showTab(i) {
   document.querySelectorAll('.panel').forEach((p, idx) => p.classList.toggle('active', idx === i));
 }
 
-/* ===== 答复书生成器（8 类，救济告知自动区分）===== */
+/* ===== 答复书生成器（8 类）===== */
 const REMEDY_PRE = '\u3000\u3000如对本答复不服，依《中华人民共和国行政复议法》第二十三条第一款第（四）项的规定，请自收到本答复之日起60日内先向【复议机关名称：对本级政府工作部门的答复不服的，向本级人民政府申请复议；垂直管理部门除外】申请行政复议；对行政复议决定不服的，可以自收到行政复议决定书之日起15日内依法向人民法院提起行政诉讼。';
 const REMEDY_NORMAL = '\u3000\u3000如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。';
+
+function isWorkday(d) { const day = d.getDay(); return day !== 0 && day !== 6; }
+function addWorkdays(start, n) { let d = new Date(start); let c = 0; while (c < n) { d.setDate(d.getDate() + 1); if (isWorkday(d)) c++; } return d; }
+function fmtD(d) { const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), dd = String(d.getDate()).padStart(2,'0'); return y + '-' + m + '-' + dd; }
 
 function genDoc() {
   const type = document.getElementById('g_type').value;
@@ -176,7 +191,7 @@ function genDoc() {
   const date = document.getElementById('g_date').value || '【×年×月×日】';
   const info = document.getElementById('g_info').value || '【申请公开的信息名称/事项】';
   const extra = document.getElementById('g_extraTxt').value;
-  let body = '', remedy = REMEDY_NORMAL, basis = '';
+  let body = '', remedy = REMEDY_NORMAL, basis = '', tail = '';
   switch (type) {
     case '1':
       body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '可以公开。现随答复提供（或：可通过【获取方式、途径和时间】获取）。';
@@ -204,11 +219,18 @@ function genDoc() {
       basis = '《中华人民共和国政府信息公开条例》第三十七条';
       remedy = REMEDY_PRE;
       break;
-    case '7':
-      body = '\u3000\u3000经审查，你（单位）提出的申请内容不明确，依据《中华人民共和国政府信息公开条例》第三十条的规定，请于收到本告知书之日起【×】个工作日内一次性补正下列事项：1.【补正事项】；2.【补正事项】。补正期限自收到补正材料之日起重新计算；无正当理由逾期不补正的，视为放弃申请。';
+    case '7': {
+      const bzDays = document.getElementById('g_bzDays').value || 10;
+      const bzDate = document.getElementById('g_bzDate').value;
+      body = '\u3000\u3000经审查，你（单位）提出的申请内容不明确，依据《中华人民共和国政府信息公开条例》第三十条的规定，请于收到本告知书之日起' + bzDays + '个工作日内一次性补正下列事项：1.【补正事项】；2.【补正事项】。补正期限自收到补正材料之日起重新计算；无正当理由逾期不补正的，视为放弃申请。';
+      if (bzDate) {
+        const due = addWorkdays(new Date(bzDate + 'T00:00:00'), 20);
+        tail = '\n\u3000\u3000（提示：补正材料收到之日为' + bzDate + '，答复期限自该日起重新计算，20个工作日届满日为' + fmtD(due) + '；如需延长请提前办理审批。）';
+      }
       basis = '《中华人民共和国政府信息公开条例》第三十条';
       remedy = '';
       break;
+    }
     case '8':
       body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '已依法移交国家档案馆、成为国家档案，依据国办公开办函〔2019〕14号及《中华人民共和国档案法》的规定，请向【档案馆名称】申请查阅。';
       basis = '国办公开办函〔2019〕14号第四点；《中华人民共和国档案法》';
@@ -220,60 +242,47 @@ function genDoc() {
     body + '\n' +
     (basis ? '\u3000\u3000依据' + basis + '，告知你（单位）如下。\n' : '') +
     (remedy ? remedy + '\n' : '') +
+    (tail ? tail + '\n' : '') +
     '\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000' + org + '（盖章）\n' +
     '\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000【×年×月×日】';
   out.style.display = 'block';
 }
 
-/* 类型切换显示补充信息框 */
+/* 类型切换显示附加输入 */
 document.getElementById('g_type').addEventListener('change', function() {
-  const show = ['3','4','5','6'].includes(this.value);
-  document.getElementById('g_extra').style.display = show ? 'block' : 'none';
+  const v = this.value;
+  document.getElementById('g_extra').style.display = ['3','4','5','6'].includes(v) ? 'block' : 'none';
+  document.getElementById('g_bz').style.display = v === '7' ? 'block' : 'none';
 });
 
-/* ===== 在办台账（localStorage）===== */
-function loadLedger() {
-  try { return JSON.parse(localStorage.getItem('zfxxgk_ledger') || '[]'); } catch(e) { return []; }
+/* ===== 收费计算器（国办函〔2020〕109号）===== */
+function calcFee() {
+  const mode = document.getElementById('f_mode').value;
+  let fee = 0, detail = '';
+  if (mode === 'piece') {
+    const n = parseInt(document.getElementById('f_n').value) || 0;
+    if (n <= 10) { fee = 0; detail = n + ' 件 ≤ 10 件，不收费。'; }
+    else if (n <= 30) { fee = (n - 10) * 100; detail = '10件以下不收费；超出10件部分（' + (n - 10) + ' 件）× 100元/件。'; }
+    else {
+      fee = 2000; detail = '11—30件部分（20件）× 100元/件 = 2000元；';
+      let k = Math.ceil((n - 30) / 10), rem = n - 30;
+      for (let i = 0; i < k; i++) { const cnt = Math.min(10, rem); const price = 100 + (i + 1) * 100; fee += cnt * price; detail += (30 + i * 10 + 1) + '—' + (30 + (i + 1) * 10) + '件部分' + (cnt < 10 ? '（' + cnt + '件）' : '') + ' × ' + price + '元/件 = ' + (cnt * price) + '元；'; rem -= cnt; }
+    }
+  } else {
+    const p = parseInt(document.getElementById('f_p').value) || 0;
+    if (p <= 30) { fee = 0; detail = p + ' 页 ≤ 30 页，不收费。'; }
+    else if (p <= 100) { fee = (p - 30) * 10; detail = '30页以下不收费；超出30页部分（' + (p - 30) + ' 页）× 10元/页。'; }
+    else if (p <= 200) { fee = 700 + (p - 100) * 20; detail = '31—100页部分（70页）× 10元/页 = 700元；101—200页部分（' + (p - 100) + ' 页）× 20元/页。'; }
+    else { fee = 700 + 2000 + (p - 200) * 40; detail = '31—100页部分 700元；101—200页部分 2000元；201页以上部分（' + (p - 200) + ' 页）× 40元/页。'; }
+  }
+  const out = document.getElementById('feeOut');
+  out.innerHTML = '应收取信息处理费：<b>' + fee + ' 元</b><br>' + detail + '<br><br><span style="font-size:12px;color:#5c6b7a">程序提示：收费通知应在政府信息公开申请处理期限内发出；申请人自收到通知次日起20个工作日内缴费，逾期未缴视为放弃申请；处理期限自完成缴费次日起重新计算（办法第6条）。</span>';
+  out.style.display = 'block';
 }
-function saveLedger(list) { localStorage.setItem('zfxxgk_ledger', JSON.stringify(list)); }
-const WDAYS = 20;
-function addWorkdays(start, n) { let d = new Date(start); let c = 0; while (c < n) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0 && d.getDay() !== 6) c++; } return d; }
-function fmtD(d) { const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), dd = String(d.getDate()).padStart(2,'0'); return y + '-' + m + '-' + dd; }
-function addLedger() {
-  const id = document.getElementById('l_id').value.trim();
-  const app = document.getElementById('l_app').value.trim();
-  const date = document.getElementById('l_date').value;
-  const info = document.getElementById('l_info').value.trim();
-  const type = document.getElementById('l_type').value;
-  if (!date) { alert('请选择收到日期'); return; }
-  const list = loadLedger();
-  list.push({ id: id || ('案' + (list.length + 1)), app, date, info, type, status: '办理中', created: Date.now() });
-  saveLedger(list);
-  renderLedger();
-  document.getElementById('l_id').value = ''; document.getElementById('l_app').value = ''; document.getElementById('l_info').value = '';
-}
-function renderLedger() {
-  const list = loadLedger();
-  const box = document.getElementById('ledgerList');
-  if (!list.length) { box.innerHTML = '<p style="color:#8a97a5;font-size:13px;margin-top:10px">台账为空。登记收件后自动计算 20 个工作日截止日并临期预警（本机保存）。</p>'; return; }
-  const today = new Date(); today.setHours(0,0,0,0);
-  let h = '<table class="tbl-ledger"><tr><th>编号</th><th>申请人</th><th>事项</th><th>收到日期</th><th>20日截止</th><th>剩余</th><th>类型</th><th>状态</th><th>操作</th></tr>';
-  list.forEach((it, idx) => {
-    const start = new Date(it.date + 'T00:00:00');
-    const due = addWorkdays(start, WDAYS);
-    const left = Math.ceil((due - today) / 86400000);
-    let cls = '', lv = '<span class="lv lv-ok">正常</span>';
-    if (left <= 0) { cls = 'danger'; lv = '<span class="lv lv-high">已超期</span>'; }
-    else if (left <= 5) { cls = 'warn'; lv = '<span class="lv lv-mid">临期</span>'; }
-    else if (left <= 10) { lv = '<span class="lv lv-mid">' + left + '天</span>'; }
-    else { lv = '<span class="lv lv-ok">' + left + '天</span>'; }
-    h += '<tr class="' + cls + '"><td>' + (it.id || '') + '</td><td>' + (it.app || '') + '</td><td>' + (it.info || '') + '</td><td>' + it.date + '</td><td>' + fmtD(due) + '</td><td>' + lv + '</td><td>' + it.type + '</td><td>' + it.status + '</td><td><button class="small-btn" onclick="setDone(' + idx + ')">办结</button> <button class="small-btn" onclick="delLedger(' + idx + ')">删除</button></td></tr>';
-  });
-  h += '</table>';
-  box.innerHTML = h;
-}
-function setDone(idx) { const list = loadLedger(); list[idx].status = '已办结'; saveLedger(list); renderLedger(); }
-function delLedger(idx) { const list = loadLedger(); list.splice(idx, 1); saveLedger(list); renderLedger(); }
+document.getElementById('f_mode').addEventListener('change', function() {
+  document.getElementById('f_piece').style.display = this.value === 'piece' ? 'block' : 'none';
+  document.getElementById('f_page').style.display = this.value === 'page' ? 'block' : 'none';
+});
 
 /* ===== 检索记录生成器 ===== */
 function genSearch() {
@@ -295,6 +304,37 @@ function genSearch() {
     '检索人（签字）：' + user + '\u3000\u3000检索日期：' + date + '\n' +
     '经办人复核（签字）：\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000日期：';
   out.style.display = 'block';
+}
+
+/* ===== 要素智能检查 ===== */
+function checkDoc() {
+  const txt = document.getElementById('c_text').value || '';
+  const out = document.getElementById('cOut');
+  if (!txt.trim()) { out.innerHTML = '<div class="ck-item ck-bad">请先粘贴答复书全文。</div>'; return; }
+  const t = txt.replace(/\s+/g, '');
+  const items = [];
+  const hasArticle = /第[一二三四五六七八九十百0-9]+条/.test(t);
+  items.push({ ok: hasArticle, text: '引用具体法律条文（含"第X条"）' });
+  const hasRemedy = t.includes('行政复议') || t.includes('60日') || t.includes('六十日');
+  items.push({ ok: hasRemedy, text: '告知救济途径（行政复议/60日）' });
+  const isNotOpen = t.includes('不予公开') || t.includes('不予提供');
+  const hasPre = t.includes('先向') || t.includes('先申请行政复议') || t.includes('先申请复议');
+  if (isNotOpen) items.push({ ok: hasPre, warn: true, text: '"不予公开"类已告知"先申请行政复议"（复议前置，行政复议法第23条第(四)项）' });
+  const hasSuit = t.includes('6个月') || t.includes('六个月') || t.includes('人民法院');
+  items.push({ ok: hasSuit || hasPre, text: '告知诉讼救济（6个月/人民法院；复议前置类以"对复议决定不服再起诉"替代）' });
+  const hasOrg = !t.includes('【机关名称】') && t.includes('（盖章）');
+  items.push({ ok: hasOrg, text: '落款含机关名称与"（盖章）"' });
+  const hasDate = !t.includes('【×年') && (t.includes('年') && t.includes('月') && t.includes('日'));
+  items.push({ ok: hasDate, text: '落款含日期' });
+  const hasReply = t.includes('答复') || t.includes('告知');
+  items.push({ ok: hasReply, text: '含明确答复/告知内容' });
+  let html = '';
+  items.forEach(it => {
+    if (it.ok) html += '<div class="ck-item ck-ok">✓ ' + it.text + '</div>';
+    else if (it.warn) html += '<div class="ck-item ck-warn">⚠ ' + it.text + '（重要：不予公开类未告知复议前置属程序瑕疵）</div>';
+    else html += '<div class="ck-item ck-bad">✗ ' + it.text + '</div>';
+  });
+  out.innerHTML = html;
 }
 
 /* ===== 风险自查 ===== */
@@ -327,8 +367,6 @@ function checkRisk() {
   else { r.className = 'chk-result bad'; r.innerHTML = '<b>以下 ' + un.length + ' 项未完成，请补正后再发出：</b><br>' + un.map((c, i) => (i + 1) + '. ' + c).join('<br>'); }
   r.style.display = 'block';
 }
-
-renderLedger();
 </script>
 </body>
 </html>
