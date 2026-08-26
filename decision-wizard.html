@@ -29,13 +29,40 @@
 .restart { background: #14375a; color: #fff; border: none; border-radius: 6px; padding: 9px 20px; font-size: 13px; cursor: pointer; margin-top: 10px; }
 .restart:hover { background:#1d4e7d; }
 .progress { font-size:12px; color:#8a97a5; margin-bottom:10px; }
+/* ===== 配套可打印文书模板（原程序文书模板页融合）===== */
+.tpl-sec { margin-top: 34px; padding-top: 22px; border-top: 3px solid #14375a; }
+.tpl-sec-title { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.tpl-sec-title h2 { color:#14375a; font-size:19px; margin:0; }
+.tpl-sec-desc { font-size:13px; color:#5c6b7a; line-height:1.8; margin-bottom:14px; }
+.form { background: #fff; border: 1px solid #e3e8ee; border-radius: 10px; padding: 26px 28px; margin-bottom: 24px; }
+.form h3 { text-align: center; color: #14375a; font-size: 18px; margin-bottom: 6px; }
+.form .sub { text-align: center; color: #7f8c8d; font-size: 12.5px; margin-bottom: 18px; }
+table.tpl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.tpl th, table.tpl td { border: 1px solid #999; padding: 8px 10px; line-height: 1.7; vertical-align: top; }
+table.tpl th { background: #f0f4f8; text-align: center; }
+table.tpl td.label { background: #f7f9fb; width: 18%; text-align: center; font-weight: 600; }
+.fill-h { height: 34px; }
+.fill-m { height: 60px; }
+.fill-l { height: 90px; }
+.fill-xl { height: 140px; }
+.sig-row td { height: 60px; }
+.print-btn { display: block; margin: 0 auto 26px; background: #14375a; color: #fff; border: none; border-radius: 8px; padding: 10px 30px; font-size: 15px; cursor: pointer; }
+.print-btn:hover { background:#1d4e7d; }
+.tpl-note { font-size: 12.5px; color: #7f8c8d; margin-top: 10px; line-height: 1.8; }
+@media print {
+  .topbar, .sidebar, .print-btn, .progress, .restart, .tip, .head { display: none !important; }
+  .wrap { padding: 0; }
+  .form { border: none; padding: 10px 0; page-break-after: always; }
+  body { background: #fff; }
+  .card { border: none; box-shadow: none; }
+}
 </style>
 </head>
 <body>
-<div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="decision-wizard.html" class="active">决策向导</a><a href="tools.html">答复书生成器</a><a href="faq.html">问答</a><a href="defense-guide.html">复议诉讼</a><a href="related-laws.html">法条</a><a href="provenance.html">溯源</a><a href="staff/index.html" style="background:rgba(255,255,255,.15);border-radius:16px;">工作人员版</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
+<div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="decision-wizard.html" class="active">决策向导</a><a href="tools.html">答复书生成器</a><a href="faq.html">常见问题</a><a href="defense-guide.html">复议诉讼</a><a href="related-laws.html">法条</a><a href="provenance.html">溯源</a><a href="staff/index.html" style="background:rgba(255,255,255,.15);border-radius:16px;">工作人员版</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
 </div>
 <div class="layout">
-<aside class="sidebar"><div class="side-title">目 录 · 机关处理指引</div><div class="grp">壹 · 办理流程</div><a href="guide.html"><span class="ic">01</span>简明办理指引</a><a href="reply-guide.html"><span class="ic">02</span>完整条文版指引</a><div class="grp">贰 · 文书与工具</div><a href="decision-wizard.html" class="active"><span class="ic">🧭</span>答复决策向导</a><a href="samples.html"><span class="ic">03</span>答复文书范文库</a><a href="templates.html"><span class="ic">04</span>程序文书模板</a><a href="calculator.html"><span class="ic">05</span>时限计算器</a><a href="tools.html"><span class="ic">06</span>答复书自动生成器</a><div class="grp">叁 · 疑难解答</div><a href="faq.html"><span class="ic">07</span>疑难问答库</a><div class="grp">肆 · 复议诉讼</div><a href="defense-guide.html"><span class="ic">08</span>分类应诉方案</a><div class="grp">陆 · 法规附录</div><a href="related-laws.html"><span class="ic">09</span>配套法条库</a><a href="provenance.html"><span class="ic">10</span>溯源核验清单</a><a href="index.html"><span class="ic">11</span>法规库首页</a></aside>
+<aside class="sidebar"><div class="side-title">目 录 · 机关处理指引</div><div class="grp">壹 · 办理流程</div><a href="guide.html"><span class="ic">01</span>简明办理指引</a><a href="reply-guide.html"><span class="ic">02</span>完整条文版指引</a><div class="grp">贰 · 文书与工具</div><a href="decision-wizard.html" class="active"><span class="ic">🧭</span>答复决策向导</a><a href="samples.html"><span class="ic">03</span>答复文书范文库</a><a href="calculator.html"><span class="ic">04</span>时限计算器</a><a href="tools.html"><span class="ic">05</span>政府信息公开文书自动生成器和风险自查</a><div class="grp">叁 · 常见问题</div><a href="faq.html"><span class="ic">06</span>常见问题库</a><div class="grp">肆 · 复议诉讼</div><a href="defense-guide.html"><span class="ic">07</span>分类应诉方案</a><div class="grp">陆 · 法规附录</div><a href="related-laws.html"><span class="ic">08</span>配套法条库</a><a href="provenance.html"><span class="ic">09</span>溯源核验清单</a><a href="index.html"><span class="ic">10</span>法规库首页</a></aside>
 <main class="main">
 <div class="wrap">
   <div class="head">
@@ -50,6 +77,35 @@
     <div class="progress" id="prog"></div>
     <div id="tree"></div>
     <button class="restart" onclick="resetTree()">↺ 重新开始</button>
+  </div>
+
+  <!-- ===== 配套可打印文书模板（融合自原"程序文书模板"页）===== -->
+  <div class="card tpl-sec" id="tpl">
+    <div class="tpl-sec-title"><h2>配套可打印文书模板</h2><button class="print-btn" style="margin:0 0 0 auto" onclick="window.print()">打印本页</button></div>
+    <div class="tpl-sec-desc">与答复办理配套使用的空白记录表：检索记录表（"信息不存在"类答复必备证据）、研判记录表（收件后1—3个工作日内完成）、合法性审核送审材料清单。可直接打印使用或复制表格内容到本机关文书系统。</div>
+
+    <!-- 检索记录表 -->
+    <div class="form">
+      <h3>政府信息公开检索记录表</h3>
+      <div class="sub">（"信息不存在"类答复必备证据材料，须随卷归档）</div>
+      <table class="tpl"><tr><td class="label">申请编号</td><td style="width:32%"></td><td class="label">检索日期</td><td></td></tr><tr><td class="label">申请事项<br>（申请公开的信息）</td><td colspan="3" class="fill-m"></td></tr><tr><td class="label">检索范围<br>（覆盖载体）</td><td colspan="3" class="fill-m">□ 纸质档案　□ 电子档案　□ 公文系统　□ 门户网站　□ 政务新媒体　□ 历史公开目录　□ 其他：</td></tr><tr><td class="label">检索关键词<br>（至少2组）</td><td colspan="3" class="fill-m">关键词1：<br>关键词2：<br>关键词3：</td></tr><tr><td class="label">检索数据库/系统</td><td colspan="3"></td></tr><tr><td class="label">查阅档案情况<br>（目录/卷宗/文号）</td><td colspan="3" class="fill-l"></td></tr><tr><td class="label">检索结果</td><td colspan="3" class="fill-m">□ 未检索到所申请信息　□ 检索到相关信息（附材料）　□ 部分检索到（附材料）</td></tr><tr><td class="label">检索证据材料</td><td colspan="3">□ 检索结果截图/打印件　□ 档案查阅记录复印件　□ 台账摘录</td></tr><tr class="sig-row"><td class="label">签名确认</td><td>检索人：<br>日期：</td><td class="label">复核确认</td><td>经办人：<br>日期：</td></tr></table>
+      <p class="tpl-note">本表随答复卷宗归档，作为行政复议、诉讼中证明已尽合理检索义务的关键证据（法释〔2025〕8号第五条）。检索范围、关键词、结果须如实完整填写，不得后补、不得涂改。</p>
+    </div>
+
+    <!-- 研判记录表 -->
+    <div class="form">
+      <h3>政府信息公开申请研判记录表</h3>
+      <div class="sub">（收件后1—3个工作日内完成逐项研判）</div>
+      <table class="tpl"><tr><td class="label">申请编号</td><td style="width:32%"></td><td class="label">收件日期</td><td></td></tr><tr><td class="label">研判事项</td><td colspan="3">逐项分析并填写结论</td></tr><tr><td class="label">① 是否属于<br>政府信息</td><td colspan="3">□ 是（履行行政管理职能中制作或获取）　□ 否（属：□信访材料 □党务信息 □业务查询 □其他）</td></tr><tr><td class="label">② 是否属于<br>本单位职责</td><td colspan="3">□ 是　□ 否（应告知并说明理由，能够确定负责机关的告知其名称、联系方式）</td></tr><tr><td class="label">③ 信息是否<br>应当存在</td><td colspan="3">□ 应当存在　□ 无制作/获取记录（须经全面检索确认）　□ 属于过程性/内部信息</td></tr><tr><td class="label">④ 是否应当<br>公开</td><td colspan="3">□ 主动公开范围　□ 可以公开　□ 不予公开（理由：□国家秘密 □法律法规禁止 □三安全一稳定 □商业秘密/个人隐私 □内部事务 □过程性信息 □执法案卷）</td></tr><tr><td class="label">⑤ 是否需要<br>区分处理</td><td colspan="3">□ 否　□ 是（可公开部分提供，不予公开部分说明理由）</td></tr><tr><td class="label">⑥ 是否涉及<br>第三方权益</td><td colspan="3">□ 否　□ 是（须书面征求第三方意见，15个工作日）</td></tr><tr><td class="label">⑦ 数量频次<br>是否超合理范围</td><td colspan="3">□ 否　□ 是（可要求说明理由/收取信息处理费）</td></tr><tr><td class="label">⑧ 答复类型<br>预判</td><td colspan="3">□ 已主动公开　□ 予以公开　□ 不予公开　□ 信息不存在　□ 不属于本机关公开　□ 移交档案馆　□ 补正　□ 信访投诉不按申请处理　□ 其他：</td></tr><tr class="sig-row"><td class="label">签名确认</td><td>经办人：<br>日期：</td><td class="label">复核确认</td><td>科室负责人：<br>日期：</td></tr></table>
+    </div>
+
+    <!-- 送审清单 -->
+    <div class="form">
+      <h3>合法性审核送审材料清单</h3>
+      <div class="sub">（答复初稿最迟第10个工作日送审，留足5个工作日纠错）</div>
+      <table class="tpl"><tr><th style="width:6%">序号</th><th style="width:56%">送审材料</th><th>是否齐备</th></tr><tr><td style="text-align:center">1</td><td>政府信息公开申请原件/复印件及收文登记表</td><td>□ 是　□ 否</td></tr><tr><td style="text-align:center">2</td><td>《研判记录表》</td><td>□ 是　□ 否</td></tr><tr><td style="text-align:center">3</td><td>《检索记录表》及检索证据材料</td><td>□ 是　□ 否</td></tr><tr><td style="text-align:center">4</td><td>拟答复文稿（含附件清单及选取理由）</td><td>□ 是　□ 否</td></tr><tr><td style="text-align:center">5</td><td>相关法律依据条文</td><td>□ 是　□ 否</td></tr><tr><td style="text-align:center">6</td><td>需延长答复期限的审批材料（如有）</td><td>□ 是　□ 否</td></tr><tr class="sig-row"><td colspan="2">送审人/日期：</td><td>审核人/日期：</td></tr></table>
+      <p class="tpl-note">审核时限要求：司法所/法律顾问收到后5个工作日内出具书面意见；法定答复期限届满前至少留出5个工作日用于修改、签发、送达。避免临近截止时点提交送审，预留充足审核研判周期。</p>
+    </div>
   </div>
 </div>
 </main>
