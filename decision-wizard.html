@@ -15,9 +15,10 @@
 .card { background: #fff; border: 1px solid #e2e8ef; border-radius: 12px; padding: 22px 26px; margin-bottom: 16px; }
 .card h2 { color:#14375a; font-size: 18px; margin-bottom: 6px; }
 .card .sub { font-size: 13px; color:#7f8c8d; margin-bottom: 14px; line-height:1.8; }
-/* decision tree */
 .step { background: #f8fafc; border: 1px solid #d0d9e3; border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; }
-.step .qtext { font-size: 15px; font-weight: 700; color: #14375a; margin-bottom: 12px; }
+.step .qtext { font-size: 15px; font-weight: 700; color: #14375a; margin-bottom: 10px; }
+.step .hint { background:#fff; border:1px dashed #c9d4e0; border-radius:8px; padding:10px 14px; font-size:12.5px; color:#5c6b7a; line-height:1.9; margin-bottom:12px; }
+.step .hint b { color:#14375a; }
 .step .opts { display: flex; gap: 10px; flex-wrap: wrap; }
 .opt { background: #fff; border: 2px solid #c0ccd8; border-radius: 8px; padding: 10px 18px; font-size: 13.5px; cursor: pointer; transition: all .15s; }
 .opt:hover { border-color: #2980b9; }
@@ -27,107 +28,84 @@
 .concl b { color:#1e8449; }
 .restart { background: #14375a; color: #fff; border: none; border-radius: 6px; padding: 9px 20px; font-size: 13px; cursor: pointer; margin-top: 10px; }
 .restart:hover { background:#1d4e7d; }
+.progress { font-size:12px; color:#8a97a5; margin-bottom:10px; }
 </style>
 </head>
 <body>
-<div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="decision-wizard.html" class="active">决策向导</a><a href="tools.html">工具</a><a href="faq.html">问答</a><a href="defense-guide.html">复议诉讼</a><a href="related-laws.html">法条</a><a href="provenance.html">溯源</a><a href="staff/index.html" class="ver-switch">👥 工作人员速查版</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
+<div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="decision-wizard.html" class="active">决策向导</a><a href="tools.html">答复书生成器</a><a href="faq.html">问答</a><a href="defense-guide.html">复议诉讼</a><a href="related-laws.html">法条</a><a href="provenance.html">溯源</a><a href="staff/index.html" style="background:rgba(255,255,255,.15);border-radius:16px;">工作人员版</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
 </div>
 <div class="layout">
 <aside class="sidebar"><div class="side-title">目 录 · 机关处理指引</div><div class="grp">壹 · 办理流程</div><a href="guide.html"><span class="ic">01</span>简明办理指引</a><a href="reply-guide.html"><span class="ic">02</span>完整条文版指引</a><div class="grp">贰 · 文书与工具</div><a href="decision-wizard.html" class="active"><span class="ic">🧭</span>答复决策向导</a><a href="samples.html"><span class="ic">03</span>答复文书范文库</a><a href="templates.html"><span class="ic">04</span>程序文书模板</a><a href="calculator.html"><span class="ic">05</span>时限计算器</a><a href="tools.html"><span class="ic">06</span>答复书自动生成器</a><div class="grp">叁 · 疑难解答</div><a href="faq.html"><span class="ic">07</span>疑难问答库</a><div class="grp">肆 · 复议诉讼</div><a href="defense-guide.html"><span class="ic">08</span>分类应诉方案</a><div class="grp">陆 · 法规附录</div><a href="related-laws.html"><span class="ic">09</span>配套法条库</a><a href="provenance.html"><span class="ic">10</span>溯源核验清单</a><a href="index.html"><span class="ic">11</span>法规库首页</a></aside>
-<main class="main"><div class="wrap">
-  <div class="head"><h1>答复类型决策向导</h1><p>按实际情况逐题选择，自动给出对应的<b>答复类型、法律依据与范文链接</b>。每选一项自动展开下一题，最终给出结论；可随时点"↺ 重新开始"。</p></div>
-  <div class="tip">💡 本向导覆盖政府信息公开申请的 17 类法定答复情形（条例第36条各项：予以公开、已主动公开、不予公开、信息不存在、不属于本机关、重复申请、工商不动产等特别规定；以及补正〔第30条〕、部分公开〔第37条〕、涉第三方〔第32条〕、共同制作〔第34条〕、信访投诉与出版物〔第39条〕、收费〔第35、42条〕、更正〔第41条〕；"已移交档案馆"依国办公开办函〔2019〕14号及《档案法》办理）。结论为辅助判断，复杂个案请结合法律顾问合法性审核。</div>
-  <div class="card"><h2>开始判断 · 答复类型</h2><div class="sub">从"申请内容是否明确"起，依次作答即可。</div><div id="tree"></div><button class="restart" onclick="restartTree()">↺ 重新开始</button></div>
-</div></main>
+<main class="main">
+<div class="wrap">
+  <div class="head">
+    <h1>答复类型决策向导</h1>
+    <p>按实际情况逐题选择，自动给出<b>答复类型、法律依据与范文链接</b>。每题附"判断要点"帮助甄别。</p>
+  </div>
+  <div class="tip"><b>使用提示：</b>① 一份申请包含多个事项的，请<b>逐项分别判断</b>、分别答复（可在<a href="tools.html">答复书自动生成器</a>中生成复合答复书）；② 判断结论为辅助参考，复杂个案请结合法律顾问合法性审核；③ 不确定时优先咨询本单位政府信息公开工作机构。</div>
+
+  <div class="card">
+    <h2>开始判断</h2>
+    <div class="sub">从"申请内容是否明确"起，依次作答；每题点击对应选项进入下一步。</div>
+    <div class="progress" id="prog"></div>
+    <div id="tree"></div>
+    <button class="restart" onclick="resetTree()">↺ 重新开始</button>
+  </div>
 </div>
-<footer class="footer"><div class="f-title">政府信息公开事项机关处理指引</div>依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制 · 全部法条均引自官方公开发布原文<br>内部工作指引 · 供两江新区各机关政府信息公开工作人员使用 · 可离线运行
+</main>
+</div>
+<footer class="footer">
+  <div class="f-title">政府信息公开事项机关处理指引</div>
+  依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制 · 全部法条均引自官方公开发布原文<br>
+  内部工作指引 · 供两江新区各机关政府信息公开工作人员使用 · 可离线运行
 </footer>
+
 <script>
-const tree = [
-  { q: "申请内容是否明确？（有信息名称/文号/特征描述）", opts: [
-    { t: "不明确", to: { q: "是否已7个工作日内一次性告知补正？", opts: [
-      { t: "已告知补正", concl: "10-补正", to: null },
-      { t: "尚未告知", concl: "10-补正", to: null }
-    ]}},
-    { t: "明确", to: { q: "申请是否属于信访、投诉、举报形式？", opts: [
-      { t: "是", concl: "11-信访", to: null },
-      { t: "否", to: { q: "申请内容是否属于政府信息？（条例第2条）", opts: [
-        { t: "否（如业务查询/党务）", concl: "17-特别", to: null },
-        { t: "是", to: { q: "是否属于本单位职责范围？", opts: [
-          { t: "否", concl: "5-不属于", to: null },
-          { t: "是", to: { q: "是否已主动公开？", opts: [
-            { t: "是", concl: "2-已公开", to: null },
-            { t: "否", to: { q: "经全面检索，信息是否存在？", opts: [
-              { t: "不存在（附检索留痕）", concl: "4-不存在", to: null },
-              { t: "存在", to: { q: "是否属于法定不予公开情形？（第14-16条）", opts: [
-                { t: "是（可区分处理则部分公开）", concl: "3-不予公开", to: null },
-                { t: "否", to: { q: "是否涉及第三方权益（商业秘密/个人隐私）？", opts: [
-                  { t: "是（须书面征求第三方意见）", concl: "8-第三方", to: null },
-                  { t: "否", to: { q: "数量频次是否明显超过合理范围？", opts: [
-                    { t: "是", concl: "13-收费", to: null },
-                    { t: "否", concl: "1-予以公开", to: null }
-                  ]}}
-                ]}}
-              ]}}
-            ]}}
-          ]}}
-        ]}}
-      ]}}
-    ]}}
-  ]}
+/* 决策树：每题含判断要点；结论覆盖 17 类答复情形 */
+const QS = [
+  { q: '1. 申请内容是否明确？', hint: '<b>判断要点：</b>申请要素包括：①申请人姓名或名称、身份证明、联系方式；②所申请信息的名称、文号或特征性描述；③获取信息的方式。要素不全的属"内容不明确"（条例第29条），应一次性告知补正；<b>不能以不明确为由直接不答复</b>。', opts: ['内容明确', '内容不明确'], next: { '内容明确': 1, '内容不明确': 'r:补正' } },
+  { q: '2. 申请事项是否属于政府信息？', hint: '<b>判断要点：</b>政府信息＝行政机关在<b>履行行政管理职能过程中制作或者获取的、以一定形式记录、保存的信息</b>（条例第2条）。<b>不属于</b>的常见情形：党务信息、信访投诉举报材料、民事纠纷材料、司法程序中形成的材料、尚未形成正式信息的内部事务等。<b>特别注意</b>：不动产登记、户籍、工商登记等属"业务查询事项"，不适用依申请公开程序（国办公开办函〔2016〕206号）。', opts: ['属于政府信息', '不属于（业务查询/党务/信访等）'], next: { '属于政府信息': 2, '不属于（业务查询/党务/信访等）': 'r:不属信息' } },
+  { q: '3. 是否由本机关负责公开？', hint: '<b>判断要点：</b>①信息由本机关制作的→本机关负责公开；②从公民、法人和其他组织获取的→保存机关负责；③获取的其他机关信息→制作或最初获取机关负责；④共同制作的→牵头机关负责（条例第10条）。收到申请即有答复义务，<b>不能以"不属于本机关"为由不予答复</b>，须说明理由并告知负责机关（条例第36条(五)；国办公开办函〔2014〕67号、〔2019〕14号）。', opts: ['是本机关职责', '不是本机关职责'], next: { '是本机关职责': 3, '不是本机关职责': 'r:不属本机关' } },
+  { q: '4. 该信息是否已主动公开？', hint: '<b>判断要点：</b>已通过政府网站、政府公报、新闻发布会、政务新媒体等渠道主动公开的，告知申请人<b>获取方式、途径</b>即可（条例第36条(一)）；注意核实公开链接当前有效。', opts: ['已主动公开', '未主动公开'], next: { '已主动公开': 'r:已公开', '未主动公开': 4 } },
+  { q: '5. 全面检索是否找到该信息？', hint: '<b>判断要点：</b>检索须覆盖<b>纸质档案、电子档案、公文系统、门户网站、年度报告、历史公开目录等全部载体</b>；关键词≥2组（含同义词、规范名称、文号）；<b>检索过程全程留痕</b>（范围/关键词/结果/检索人/日期）。申请人提供制作或保存线索的，须针对性补充检索（指导案例101号）。', opts: ['检索找到', '检索未找到'], next: { '检索找到': 5, '检索未找到': 'r:不存在' } },
+  { q: '6. 是否涉及第三方权益（商业秘密/个人隐私）？', hint: '<b>判断要点：</b>涉及商业秘密、个人隐私且公开会对第三方合法权益造成损害的，不得公开；但<b>须先书面征求第三方意见</b>（15个工作日，逾期未提视为同意公开，条例第32条）；第三方不同意且有合理理由的不予公开；<b>不公开可能对公共利益造成重大影响的，可以公开</b>并书面告知第三方（条例第15条）。', opts: ['涉及第三方权益', '不涉及'], next: { '涉及第三方权益': 'r:第三方', '不涉及': 6 } },
+  { q: '7. 是否属于法定不予公开情形？', hint: '<b>判断要点：</b>法定不予公开（条例第14—16条）：①依法确定为国家秘密的信息；②法律、行政法规禁止公开的信息；③公开后可能危及国家安全、公共安全、经济安全、社会稳定的信息；④涉及商业秘密、个人隐私（见上题）；⑤内部事务信息（人事管理、后勤管理、内部工作流程）；⑥过程性信息（讨论记录、过程稿、磋商信函、请示报告）；⑦行政执法案卷信息。<b>不予公开须逐项说明理由</b>并引用具体条文。', opts: ['属于不予公开情形', '不属于'], next: { '属于不予公开情形': 'r:不予公开', '不属于': 7 } },
+  { q: '8. 是否可作区分处理（部分公开）？', hint: '<b>判断要点：</b>申请的信息中含有不应当公开或不属于政府信息的内容，但<b>能够作区分处理的</b>，应提供可公开部分并对不予公开部分说明理由（条例第37条）；<b>不能整体拒绝</b>；确实无法区分的才可整体不予提供。', opts: ['可区分处理（部分公开）', '不可区分，整体提供'], next: { '可区分处理（部分公开）': 'r:部分公开', '不可区分，整体提供': 8 } },
+  { q: '9. 是否属于下列特殊情形？（选择最贴近的一项）', hint: '<b>判断要点：</b>①<b>信访投诉举报</b>：以申请形式反映诉求、要求解决问题，告知不按政府信息公开申请处理（条例第39条1款）；②<b>索要公开出版物</b>：告知获取途径（第39条2款）；③<b>工商/不动产登记资料</b>：属业务查询，告知按专门法律法规办理（第36条(七)；国办公开办函〔2016〕206号）；④<b>重复申请</b>：已就相同信息作出答复的，告知不予重复处理（第36条(六)）；⑤<b>数量频次明显超合理范围</b>：可要求说明理由，理由不合理的告知不予处理，合理的可收信息处理费（第35、42条；国办函〔2020〕109号）；⑥均不属于→予以公开。', opts: ['信访投诉举报', '索要公开出版物', '工商/不动产等业务查询', '重复申请', '数量频次超合理范围', '均不属于，直接公开'], next: { '信访投诉举报': 'r:信访', '索要公开出版物': 'r:出版物', '工商/不动产等业务查询': 'r:业务查询', '重复申请': 'r:重复', '数量频次超合理范围': 'r:频次', '均不属于，直接公开': 'r:予以公开' } }
 ];
-const conclMap = {
-  "1-予以公开": { t: "予以公开", d: "依据《条例》第36条第(二)项向申请人提供信息或告知获取方式、途径和时间；按第40条确定提供形式。", s: "samples.html#s1" },
-  "2-已公开": { t: "已主动公开", d: "依据《条例》第36条第(一)项告知获取方式、途径（附网址/查阅地点）。", s: "samples.html#s2" },
-  "3-不予公开": { t: "不予公开（说明理由）", d: "依据《条例》第36条第(三)项及第14-16条，逐项说明不予公开理由；可区分处理的按第37条部分公开。", s: "samples.html#s3" },
-  "4-不存在": { t: "经检索信息不存在", d: "依据《条例》第36条第(四)项告知信息不存在；必须附检索留痕证据（法释〔2025〕8号第5条举证责任）。", s: "samples.html#s4" },
-  "5-不属于": { t: "不属于本机关公开", d: "依据《条例》第36条第(五)项告知并说明理由，能确定负责机关的告知名称、联系方式。", s: "samples.html#s5" },
-  "6-已移交": { t: "已移交档案馆", d: "按档案法告知向档案馆申请查阅（国办公开办函〔2019〕14号）。", s: "samples.html#s6" },
-  "7-部分公开": { t: "部分公开（区分处理）", d: "依据《条例》第37条提供可公开部分，对不予公开部分说明理由。", s: "samples.html#s7" },
-  "8-第三方": { t: "涉第三方权益", d: "书面征求第三方意见（15个工作日，条例第32条），按意见决定公开/不公开；注意公共利益评估。", s: "samples.html#s8" },
-  "10-补正": { t: "要求补正", d: "依据《条例》第30条，7个工作日内一次性告知补正事项和合理期限；答复期限自收到补正申请之日起算。", s: "samples.html#s10" },
-  "11-信访": { t: "信访投诉不按申请处理", d: "依据《条例》第39条第1款告知不作为政府信息公开申请处理，可告知通过相应渠道提出。", s: "samples.html#s11" },
-  "13-收费": { t: "数量频次超合理范围", d: "依据《条例》第35、42条及国办函〔2020〕109号，可要求说明理由、收取信息处理费。", s: "samples.html#s13" },
-  "16-重复": { t: "重复申请不予重复处理", d: "依据《条例》第36条第(六)项告知不予重复处理。", s: "samples.html#s16" },
-  "17-特别": { t: "工商/不动产等特别规定", d: "依据《条例》第36条第(七)项及国办公开办函〔2016〕206号，告知按专门法律法规办理。", s: "samples.html#s17" }
+const CONCL = {
+  '补正': { t: '告知补正', d: '自收到申请之日起7个工作日内一次性告知补正事项和合理期限；补正期限自收到补正材料之日起重新计算；无正当理由逾期不补正的视为放弃（条例第30条）。', s: 'samples.html#s10', hint: '补正告知书须书面作出并留存送达凭证。' },
+  '不属信息': { t: '告知不属于政府信息（或业务查询事项）', d: '说明理由并告知相应渠道：属业务查询事项（不动产登记、户籍、工商登记等）的，告知按专门法律法规向有权机关查询（条例第2条；国办公开办函〔2016〕206号）。', s: 'samples.html', hint: '不能简单答复"不属于政府信息"了事，须说明理由；涉业务查询的应指明办理渠道。' },
+  '不属本机关': { t: '告知不属于本机关公开', d: '告知申请人并说明理由；能够确定负责公开的行政机关的，告知该机关名称、联系方式（条例第36条(五)）。', s: 'samples.html#s5', hint: '收到申请即有答复义务，不得推诿不答复。' },
+  '已公开': { t: '告知已主动公开', d: '告知申请人获取该政府信息的方式、途径（可附公开网址/查阅地点）（条例第36条(一)）。', s: 'samples.html#s2', hint: '核实公开链接当前有效，避免链接失效被认定未履行告知义务。' },
+  '不存在': { t: '告知信息不存在', d: '告知该政府信息不存在；必须附《检索记录表》（范围/关键词≥2组/结果/检索人/日期）随卷归档（条例第36条(四)；法释〔2025〕8号第5条）。', s: 'samples.html#s4', hint: '检索无留痕=败诉风险；答复前复核是否曾主动公开、既往答复是否涉及。' },
+  '第三方': { t: '涉第三方权益程序', d: '先书面征求第三方意见（15个工作日，逾期未提视为同意公开）；第三方不同意且有合理理由的不予公开；涉及公共利益重大影响的可以公开并书面告知第三方（条例第15、32条）。', s: 'samples.html#s8', hint: '电话沟通不算书面征求意见；征求意见时间不计算在答复期限内。' },
+  '不予公开': { t: '决定不予公开', d: '逐项说明理由并引用条例第14/15/16条具体条文（第36条(三)）；<b>救济告知必须写"先申请行政复议"</b>（复议前置，行政复议法第23条第(四)项）。', s: 'samples.html#s3', hint: '不予公开必须说明理由，不得笼统答复；可区分处理的先区分。' },
+  '部分公开': { t: '部分公开（区分处理）', d: '提供可公开部分，对不予公开部分逐项说明理由（条例第37条）；<b>含不予公开决定的，救济告知写"先申请行政复议"</b>（复议前置）。', s: 'samples.html#s7', hint: '能区分而不区分＝未依法履行公开义务。' },
+  '信访': { t: '告知不按政府信息公开申请处理', d: '申请人以申请形式进行信访、投诉、举报等活动的，告知不作为政府信息公开申请处理，可告知通过相应渠道提出（条例第39条1款）。', s: 'samples.html#s11', hint: '须有实质依据判断为信访投诉，不能随意归类；保留甄别记录。' },
+  '出版物': { t: '告知获取途径', d: '申请内容为要求提供政府公报、报刊、书籍等公开出版物的，告知获取途径（条例第39条2款）。', s: 'samples.html#s12', hint: '' },
+  '业务查询': { t: '告知按专门法律法规办理', d: '属工商、不动产登记资料等信息，告知依照有关法律、行政法规的规定办理（条例第36条(七)；国办公开办函〔2016〕206号）。', s: 'samples.html#s17', hint: '业务查询与政府信息公开存在根本差别，注意甄别。' },
+  '重复': { t: '告知不予重复处理', d: '已就相同政府信息作出答复、申请人重复申请的，告知不予重复处理（条例第36条(六)）；原答复违法的不适用。', s: 'samples.html#s16', hint: '非"相同信息"不得误作重复申请。' },
+  '频次': { t: '要求说明理由 / 收取信息处理费', d: '数量、频次明显超过合理范围的，可要求说明理由；理由不合理的告知不予处理；理由合理的可收取信息处理费（条例第35、42条；国办函〔2020〕109号）。', s: 'samples.html#s13', hint: '收费通知应在申请处理期限内发出；缴费期限与程序见办法第6条。' },
+  '予以公开': { t: '予以公开', d: '向申请人提供该政府信息，或告知获取方式、途径和时间（条例第36条(二)）；提供形式按申请人要求（第40条）。', s: 'samples.html#s1', hint: '' }
 };
-function restartTree() {
-  buildTree(tree[0], document.getElementById('tree'));
+let cur = 0;
+function renderTree() {
+  const box = document.getElementById('tree');
+  const prog = document.getElementById('prog');
+  if (typeof cur === 'string') {
+    const c = CONCL[cur.replace('r:', '')];
+    prog.textContent = '';
+    box.innerHTML = '<div class="concl show"><b>判断结论：' + c.t + '</b><br>' + c.d + (c.hint ? '<br><span style="color:#8a97a5;font-size:12.5px">提示：' + c.hint + '</span>' : '') + '<br><a href="' + c.s + '">使用对应范文 →</a> · <a href="tools.html">在答复书生成器中生成 →</a></div>';
+    return;
+  }
+  const s = QS[cur];
+  prog.textContent = '第 ' + (cur + 1) + ' / 9 步';
+  box.innerHTML = '<div class="step"><div class="qtext">' + s.q + '</div>' + (s.hint ? '<div class="hint">' + s.hint + '</div>' : '') + '<div class="opts">' + s.opts.map(o => '<button class="opt" onclick="pick(\'' + o + '\')">' + o + '</button>').join('') + '</div></div>';
 }
-function buildTree(node, container) {
-  container.innerHTML = '';
-  const step = document.createElement('div');
-  step.className = 'step';
-  step.innerHTML = '<div class="qtext">' + node.q + '</div><div class="opts"></div>';
-  const optsBox = step.querySelector('.opts');
-  node.opts.forEach(o =>{
-    const btn = document.createElement('div');
-    btn.className = 'opt';
-    btn.textContent = o.t;
-    btn.onclick = function() {
-      optsBox.querySelectorAll('.opt').forEach(x =>x.classList.remove('selected'));
-      btn.classList.add('selected');
-      const old = step.querySelector('.concl');
-      if (old) old.remove();
-      if (o.concl) {
-        const c = conclMap[o.concl];
-        const div = document.createElement('div');
-        div.className = 'concl show';
-        div.innerHTML = '<b>结论：' + c.t + '</b><br>' + c.d + '<br>查看范文：<a href="' + c.s + '" target="_blank">' + c.s + '</a>';
-        step.appendChild(div);
-      } else if (o.to) {
-        const childContainer = document.createElement('div');
-        childContainer.style.marginTop = '14px';
-        step.appendChild(childContainer);
-        buildTree(o.to, childContainer);
-      }
-    };
-    optsBox.appendChild(btn);
-  });
-  container.appendChild(step);
-}
-restartTree();
+function pick(o) { cur = QS[cur].next[o]; renderTree(); }
+function resetTree() { cur = 0; renderTree(); }
+renderTree();
 </script>
-<a href="staff/index.html" class="ver-fab"><span class="ic">👥</span>工作人员速查版</a>
 </body>
 </html>

@@ -68,35 +68,50 @@ textarea { min-height: 60px; }
   <div class="panel active" id="tab0">
     <div class="card">
       <h2>答复书生成器</h2>
-      <label>答复类型（自动匹配正文与救济告知）</label>
-      <select id="g_type">
-        <option value="1">予以公开（条例第36条(二)）</option>
-        <option value="2">已主动公开（条例第36条(一)）</option>
-        <option value="3">不予公开（条例第36条(三) + 复议前置告知）</option>
-        <option value="4">信息不存在（条例第36条(四)，附检索留痕）</option>
-        <option value="5">不属于本机关公开（条例第36条(五)）</option>
-        <option value="6">部分公开·区分处理（条例第37条 + 复议前置告知）</option>
-        <option value="7">补正告知书（条例第30条）</option>
-        <option value="8">已移交档案馆（国办公开办函〔2019〕14号）</option>
+      <label>生成模式（一份申请含多个事项时选择"复合答复"）</label>
+      <select id="g_mode" style="max-width:260px">
+        <option value="single">单事项答复</option>
+        <option value="multi">复合答复（多个事项分别答复）</option>
       </select>
+
+      <div id="singleBox">
+        <label>答复类型（自动匹配正文与救济告知）</label>
+        <select id="g_type">
+          <option value="1">予以公开（条例第36条(二)）</option>
+          <option value="2">已主动公开（条例第36条(一)）</option>
+          <option value="3">不予公开（条例第36条(三) + 复议前置告知）</option>
+          <option value="4">信息不存在（条例第36条(四)，附检索留痕）</option>
+          <option value="5">不属于本机关公开（条例第36条(五)）</option>
+          <option value="6">部分公开·区分处理（条例第37条 + 复议前置告知）</option>
+          <option value="7">补正告知书（条例第30条）</option>
+          <option value="8">已移交档案馆（国办公开办函〔2019〕14号）</option>
+        </select>
+        <label>申请内容（信息名称/事项）</label><textarea id="g_info" placeholder="例：×××项目的批复文件"></textarea>
+        <div id="g_bz" style="display:none">
+          <label>补正期限（工作日，条例第30条要求合理期限）</label>
+          <input type="number" id="g_bzDays" value="10" min="5" max="30" style="max-width:120px">
+          <label style="display:inline;margin-left:10px">补正材料收到日期（可选，用于自动计算重新起算的答复截止日）</label>
+          <input type="date" id="g_bzDate" style="max-width:170px;display:inline">
+        </div>
+        <div id="g_extra" style="display:none">
+          <label>补充信息（按类型填写：不予公开理由 / 检索范围与关键词 / 负责公开机关 / 可公开部分等）</label>
+          <textarea id="g_extraTxt"></textarea>
+        </div>
+      </div>
+
+      <div id="multiBox" style="display:none">
+        <p style="font-size:13px;color:#5c6b7a;margin-bottom:10px">逐项添加申请事项，每项选择答复类型并填写说明；生成时逐项答复、末尾统一告知救济途径（含不予公开事项的自动按复议前置告知）。</p>
+        <div id="items"></div>
+        <button class="gen-btn" style="background:#7f8c8d" onclick="addItem()">＋ 添加事项</button>
+      </div>
+
       <label>机关名称</label><input type="text" id="g_org" placeholder="例：重庆市两江新区金山街道办事处">
       <label>文号</label><input type="text" id="g_no" placeholder="例：金街依复〔2026〕第X号">
       <label>申请人</label><input type="text" id="g_app" placeholder="申请人姓名/名称">
       <label>申请日期</label><input type="date" id="g_date">
-      <label>申请内容（信息名称/事项）</label><textarea id="g_info" placeholder="例：×××项目的批复文件"></textarea>
-      <div id="g_bz" style="display:none">
-        <label>补正期限（工作日，条例第30条要求合理期限）</label>
-        <input type="number" id="g_bzDays" value="10" min="5" max="30" style="max-width:120px">
-        <label style="display:inline;margin-left:10px">补正材料收到日期（可选，用于自动计算重新起算的答复截止日）</label>
-        <input type="date" id="g_bzDate" style="max-width:170px;display:inline">
-      </div>
-      <div id="g_extra" style="display:none">
-        <label>补充信息（按类型填写：不予公开理由 / 检索范围与关键词 / 负责公开机关 / 可公开部分等）</label>
-        <textarea id="g_extraTxt"></textarea>
-      </div>
       <button class="gen-btn" onclick="genDoc()">生成答复书</button>
       <div class="gen-out" id="genOut"></div>
-      <p class="tip">生成内容为初稿框架，正式发出前须经合法性审核；"不予公开""部分公开"类自动写入复议前置告知；补正类自动计算补正后重新起算的答复截止日；答复书须加盖公章并留存送达凭证。</p>
+      <p class="tip">生成内容为初稿框架，正式发出前须经合法性审核；"不予公开""部分公开"类自动写入复议前置告知；复合答复按事项逐项输出；补正类自动计算补正后重新起算的答复截止日；答复书须加盖公章并留存送达凭证。判断属于哪类答复可先用<a href="decision-wizard.html">决策向导</a>。</p>
     </div>
   </div>
 
@@ -255,7 +270,94 @@ document.getElementById('g_type').addEventListener('change', function() {
   document.getElementById('g_bz').style.display = v === '7' ? 'block' : 'none';
 });
 
-/* ===== 收费计算器（国办函〔2020〕109号）===== */
+/* ===== 复合答复（多事项）===== */
+const MTYPES = [
+  ['1', '予以公开'],
+  ['2', '已主动公开'],
+  ['3', '不予公开（复议前置告知）'],
+  ['4', '信息不存在'],
+  ['5', '不属于本机关公开'],
+  ['6', '部分公开（复议前置告知）'],
+  ['8', '已移交档案馆']
+];
+let items = [ { name: '', type: '1', extra: '' } ];
+function renderItems() {
+  const box = document.getElementById('items');
+  if (!items.length) { box.innerHTML = ''; return; }
+  box.innerHTML = items.map((it, i) =>
+    '<div style="background:#f8fafc;border:1px solid #d0d9e3;border-radius:10px;padding:14px 16px;margin-bottom:10px">' +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">' +
+    '<span style="font-size:13px;font-weight:700;color:#14375a">事项 ' + (i + 1) + '</span>' +
+    '<select onchange="setItem(' + i + ',\'type\',this.value)" style="max-width:240px;margin-bottom:0">' + MTYPES.map(t => '<option value="' + t[0] + '"' + (it.type === t[0] ? ' selected' : '') + '>' + t[1] + '</option>').join('') + '</select>' +
+    '<button class="small-btn" onclick="delItem(' + i + ')">删除</button></div>' +
+    '<input type="text" placeholder="事项内容（信息名称/事项描述）" value="' + (it.name || '') + '" onchange="setItem(' + i + ',\'name\',this.value)" style="margin-top:8px;margin-bottom:6px">' +
+    (['3','4','5','6'].includes(it.type) ? '<textarea placeholder="补充说明（不予公开理由/检索范围关键词/负责机关/可公开部分等）" onchange="setItem(' + i + ',\'extra\',this.value)" style="min-height:40px;margin-bottom:0">' + (it.extra || '') + '</textarea>' : '') +
+    '</div>').join('');
+}
+function setItem(i, k, v) { items[i][k] = v; renderItems(); }
+function addItem() { items.push({ name: '', type: '1', extra: '' }); renderItems(); }
+function delItem(i) { items.splice(i, 1); if (!items.length) items.push({ name: '', type: '1', extra: '' }); renderItems(); }
+document.getElementById('g_mode').addEventListener('change', function() {
+  const multi = this.value === 'multi';
+  document.getElementById('singleBox').style.display = multi ? 'none' : 'block';
+  document.getElementById('multiBox').style.display = multi ? 'block' : 'none';
+  if (multi) renderItems();
+});
+function itemBody(it, idx) {
+  let r = '';
+  switch (it.type) {
+    case '1': r = '\u3000\u3000（' + (idx + 1) + '）关于"' + (it.name || '【事项】') + '"：经审查可以公开。现随答复提供（或：可通过【获取方式、途径和时间】获取）。依据《中华人民共和国政府信息公开条例》第三十六条第（二）项。'; break;
+    case '2': r = '\u3000\u3000（' + (idx + 1) + '）关于"' + (it.name || '【事项】') + '"：本机关已主动公开，可通过【公开网址/查阅地点】获取。依据《中华人民共和国政府信息公开条例》第三十六条第（一）项。'; break;
+    case '3': r = '\u3000\u3000（' + (idx + 1) + '）关于"' + (it.name || '【事项】') + '"：依据《中华人民共和国政府信息公开条例》第【十四/十五/十六】条第【×】款的规定，属于【不予公开情形】' + (it.extra ? '，理由：' + it.extra : '') + '。决定不予公开。'; break;
+    case '4': r = '\u3000\u3000（' + (idx + 1) + '）关于"' + (it.name || '【事项】') + '"：经检索（范围：' + (it.extra || '【纸质档案、电子档案、公文系统、门户网站等全部载体】') + '，关键词：×××、×××），未发现该信息。依据《中华人民共和国政府信息公开条例》第三十六条第（四）项，该政府信息不存在。'; break;
+    case '5': r = '\u3000\u3000（' + (idx + 1) + '）关于"' + (it.name || '【事项】') + '"：不属于本行政机关负责公开，理由：【说明理由】' + (it.extra ? '。负责公开机关：' + it.extra : '') + '。依据《中华人民共和国政府信息公开条例》第三十六条第（五）项。'; break;
+    case '6': r = '\u3000\u3000（' + (idx + 1) + '）关于"' + (it.name || '【事项】') + '"：该信息中含有不应当公开的内容，但可作区分处理，现提供可公开部分：【可公开内容】' + (it.extra ? '；对不予公开部分【' + it.extra + '】' : '') + '，理由：【说明理由】。依据《中华人民共和国政府信息公开条例》第三十七条。'; break;
+    case '8': r = '\u3000\u3000（' + (idx + 1) + '）关于"' + (it.name || '【事项】') + '"：该信息已依法移交国家档案馆、成为国家档案，依据国办公开办函〔2019〕14号及《中华人民共和国档案法》的规定，请向【档案馆名称】申请查阅。'; break;
+  }
+  return r;
+}
+function genDoc() {
+  const org = document.getElementById('g_org').value || '【机关名称】';
+  const no = document.getElementById('g_no').value || '【文号：×××依复〔20××〕第×号】';
+  const app = document.getElementById('g_app').value || '【申请人姓名/名称】';
+  const date = document.getElementById('g_date').value || '【×年×月×日】';
+  const mode = document.getElementById('g_mode').value;
+  const out = document.getElementById('genOut');
+  let doc = org + '政府信息公开申请答复书' + '\n' + no + '\n\n' + app + '：\n\u3000\u3000你（单位）于' + date + '提出的政府信息公开申请（申请编号：【×××】）收悉。\n';
+  if (mode === 'multi') {
+    if (!items.length || items.every(it => !it.name)) { alert('请至少填写一个事项'); return; }
+    items.forEach((it, idx) => { doc += itemBody(it, idx) + '\n'; });
+    const hasPre = items.some(it => it.type === '3' || it.type === '6');
+    doc += hasPre
+      ? '\u3000\u3000如对本答复中不予公开决定不服的，依《中华人民共和国行政复议法》第二十三条第一款第（四）项的规定，请自收到本答复之日起60日内先向【复议机关名称】申请行政复议（复议前置）；对行政复议决定不服的，可以自收到行政复议决定书之日起15日内依法向人民法院提起行政诉讼。如对本答复其他内容不服的，可以自收到本答复之日起60日内申请行政复议，或者6个月内提起行政诉讼。\n'
+      : '\u3000\u3000如对本答复不服，可以自收到本答复之日起60日内向【复议机关名称】申请行政复议，或者6个月内向【人民法院名称】提起行政诉讼。\n';
+  } else {
+    const type = document.getElementById('g_type').value;
+    const info = document.getElementById('g_info').value || '【申请公开的信息名称/事项】';
+    const extra = document.getElementById('g_extraTxt').value;
+    let body = '', remedy = REMEDY_NORMAL, basis = '', tail = '';
+    switch (type) {
+      case '1': body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '可以公开。现随答复提供（或：可通过【获取方式、途径和时间】获取）。'; basis = '《中华人民共和国政府信息公开条例》第三十六条第（二）项'; break;
+      case '2': body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '本机关已主动公开，可通过【公开网址/查阅地点】获取。'; basis = '《中华人民共和国政府信息公开条例》第三十六条第（一）项'; break;
+      case '3': body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '，依据《中华人民共和国政府信息公开条例》第【十四/十五/十六】条第【×】款的规定，属于【不予公开情形表述】' + (extra ? '。理由如下：' + extra : '') + '。'; basis = '《中华人民共和国政府信息公开条例》第三十六条第（三）项、第14—16条'; remedy = REMEDY_PRE; break;
+      case '4': body = '\u3000\u3000经检索，本机关在【检索范围：' + (extra || '纸质档案、电子档案、公文系统、门户网站等全部载体') + '】中以【检索关键词：×××、×××（不少于2组）】进行了全面检索，未发现你（单位）申请公开的' + info + '。'; basis = '《中华人民共和国政府信息公开条例》第三十六条第（四）项'; break;
+      case '5': body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '不属于本行政机关负责公开，理由：【说明理由】' + (extra ? '。该信息负责公开机关为：' + extra : '') + '。'; basis = '《中华人民共和国政府信息公开条例》第三十六条第（五）项'; break;
+      case '6': body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '中含有不应当公开的内容，但可以作区分处理。现提供可以公开的内容如下：【可公开内容】' + (extra ? '；对不予公开的部分【' + extra + '】' : '') + '，理由：【说明理由】。'; basis = '《中华人民共和国政府信息公开条例》第三十七条'; remedy = REMEDY_PRE; break;
+      case '7': {
+        const bzDays = document.getElementById('g_bzDays').value || 10;
+        const bzDate = document.getElementById('g_bzDate').value;
+        body = '\u3000\u3000经审查，你（单位）提出的申请内容不明确，依据《中华人民共和国政府信息公开条例》第三十条的规定，请于收到本告知书之日起' + bzDays + '个工作日内一次性补正下列事项：1.【补正事项】；2.【补正事项】。补正期限自收到补正材料之日起重新计算；无正当理由逾期不补正的，视为放弃申请。';
+        if (bzDate) { const due = addWorkdays(new Date(bzDate + 'T00:00:00'), 20); tail = '\n\u3000\u3000（提示：补正材料收到之日为' + bzDate + '，答复期限自该日起重新计算，20个工作日届满日为' + fmtD(due) + '；如需延长请提前办理审批。）'; }
+        basis = '《中华人民共和国政府信息公开条例》第三十条'; remedy = ''; break;
+      }
+      case '8': body = '\u3000\u3000经审查，你（单位）申请公开的' + info + '已依法移交国家档案馆、成为国家档案，依据国办公开办函〔2019〕14号及《中华人民共和国档案法》的规定，请向【档案馆名称】申请查阅。'; basis = '国办公开办函〔2019〕14号第四点；《中华人民共和国档案法》'; break;
+    }
+    doc += body + '\n' + (basis ? '\u3000\u3000依据' + basis + '，告知你（单位）如下。\n' : '') + (remedy ? remedy + '\n' : '') + (tail ? tail + '\n' : '');
+  }
+  doc += '\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000' + org + '（盖章）\n' + '\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000【×年×月×日】';
+  out.innerHTML = doc;
+  out.style.display = 'block';
+}
 function calcFee() {
   const mode = document.getElementById('f_mode').value;
   let fee = 0, detail = '';
