@@ -78,7 +78,7 @@
     <div class="result-box" id="res"></div>
   </div>
 
-  <p class="staff-footer-note">完整版计算器（补正日期选择、延长天数档位、送审截止日、节假日配置）→ <a href="../calculator.html">法律顾问完整版·答复时限计算器</a></p>
+  <p class="staff-footer-note">完整版计算器（补正日期选择、延长天数档位、节假日配置）→ <a href="../calculator.html">法律顾问完整版·答复时限计算器</a></p>
 </div>
 <footer class="footer">
   <div class="f-title">政府信息公开事项处理 · 工作人员速查版</div>
@@ -118,7 +118,7 @@ function calcStaff() {
   h += '<tr><td style="padding:6px">20 个工作日届满日</td><td style="padding:6px" class="deadline">' + fmt(d20) + '</td></tr>';
   if (d40) h += '<tr><td style="padding:6px">延长后届满日</td><td style="padding:6px" class="deadline">' + fmt(d40) + '</td></tr>';
   h += '<tr><td style="padding:6px">剩余时间</td><td style="padding:6px">' + (left < 0 ? '已逾期 ' + (-left) + ' 天！' : '剩 ' + left + ' 天') + '</td></tr>';
-  h += '<tr><td style="padding:6px">送审截止</td><td style="padding:6px">' + fmt(addWorkdays(start, 10)) + '（最迟第10个工作日）</td></tr></table>';
+  h += '</table>';
   const r = document.getElementById('res');
   r.innerHTML = h; r.style.display = 'block';
 }
