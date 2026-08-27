@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政府信息检索流程</title>
+<link rel="stylesheet" href="css/style.css">
+<style>.wrap { max-width: 920px; margin: 0 auto; padding: 24px 16px 60px; }
+.head { background: linear-gradient(135deg, #1a5276, #2980b9); color: #fff; border-radius: 12px; padding: 26px 30px; margin-bottom: 20px; }
+.head h1 { font-size: 23px; margin-bottom: 8px; }
+.head p { font-size: 13.5px; opacity: .9; line-height: 1.8; }
+.nav-links { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.nav-links a { background: #eaf2f8; color: #1a5276; padding: 5px 12px; border-radius: 15px; font-size: 12.5px; text-decoration: none; }
+.card { background: #fff; border: 1px solid #e3e8ee; border-radius: 10px; padding: 22px 26px; margin-bottom: 18px; }
+.card h2 { color: #1a5276; font-size: 18px; margin-bottom: 14px; }
+.card h3 { color: #1d4e7d; font-size: 15.5px; margin: 16px 0 8px; }
+table.rule { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 8px 0 4px; }
+table.rule th { background: #14375a; color: #fff; padding: 9px 12px; text-align: left; font-weight: 600; }
+table.rule td { padding: 9px 12px; border-bottom: 1px solid #e2e8ef; vertical-align: top; line-height: 1.8; }
+table.rule tr:nth-child(even) { background: #f8fafc; }
+.tag-red { color: #c0392b; font-weight: 700; }
+.tag-gold { color: #8a6d1a; font-weight: 700; }
+.step-flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0 6px; }
+.step-box { background: #f0f4f9; border: 1px solid #d0d9e3; border-radius: 8px; padding: 8px 12px; font-size: 12.5px; line-height: 1.6; min-width: 96px; }
+.step-box b { display: block; color: #14375a; font-size: 13px; }
+.step-arrow { color: #c9a25a; font-weight: 800; }
+.note { font-size: 12.5px; color: #7f8c8d; line-height: 1.9; margin-top: 12px; }
+.warn { background: #fdf2f0; border-left: 4px solid #c0392b; padding: 10px 14px; border-radius: 6px; font-size: 13px; line-height: 1.9; margin: 10px 0; }
+.okbox { background: #eefaf3; border-left: 4px solid #27ae60; padding: 10px 14px; border-radius: 6px; font-size: 13px; line-height: 1.9; margin: 10px 0; }
+</style>
+<style>/* 统一设计覆盖 */
+.card{border-radius:12px;border:1px solid #e2e8ef}
+.card h1,.card h2{color:#14375a}
+.card h3{color:#1d4e7d}
+table.rule th{background:#14375a}
+.head,.guide-head{background:linear-gradient(120deg,#0c2440,#14375a 60%,#1d4e7d)}
+.nav-links a{background:#eef4fa;color:#14375a}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html">文书范文</a><a href="decision-wizard.html">决策向导</a><a href="tools.html">文书生成器</a><a href="faq.html">常见问题</a><a href="defense-guide.html">复议诉讼</a><a href="reply-guide.html#laws-appendix">相关法律规定</a><a href="index.html#laws">法律法规</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
+</div>
+<div class="layout"><aside class="sidebar"><div class="side-title">目 录 · 机关处理指引</div><div class="grp">壹 · 办理流程</div><a href="guide.html"><span class="ic">01</span>简明办理指引</a><a href="reply-guide.html"><span class="ic">02</span>完整条文版指引 · 相关法律规定</a><div class="grp">贰 · 文书与工具</div><a href="decision-wizard.html"><span class="ic">🧭</span>答复决策向导</a><a href="samples.html"><span class="ic">03</span>答复文书范文库</a><a href="calculator.html"><span class="ic">04</span>答复时限计算器</a><a href="search-flow.html" class="active"><span class="ic">05</span>政府信息检索流程</a><a href="tools.html"><span class="ic">06</span>政府信息公开文书自动生成器和风险自查</a><div class="grp">叁 · 常见问题</div><a href="faq.html"><span class="ic">07</span>常见问题库</a><div class="grp">肆 · 复议诉讼</div><a href="defense-guide.html"><span class="ic">08</span>分类应诉方案</a><div class="grp">陆 · 法规附录</div><a href="index.html#laws"><span class="ic">09</span>法律法规库</a></aside><main class="main"><div class="wrap"><div class="nav-links"><a href="index.html">← 返回首页</a><a href="guide.html">办理指引</a><a href="decision-wizard.html#tpl">检索记录表模板</a><a href="tools.html#tab2">检索留痕生成器</a></div><div class="head"><h1>政府信息检索流程</h1><p>检索是"信息不存在""无法提供"类答复的<b>唯一事实支撑</b>。本页给出检索的法定依据、载体范围、方式方法、七步流程、留痕要求与常见败诉风险，供办理人员在收到申请后按此开展检索。核心要求一句话：<b>载体全覆盖、关键词≥2组、过程全留痕、结果双签字、时间在答复前</b>。</p></div>
+
+<div class="card"><h2>一、检索的法律依据（答复"不存在"必须满足）</h2>
+<table class="rule"><tr><th style="width:30%">依据</th><th>要求</th></tr>
+<tr><td>《政府信息公开条例》第36条第(四)项</td><td>经检索没有所申请公开信息的，告知申请人该政府信息不存在——"检索"是适用前提</td></tr>
+<tr><td>法释〔2025〕8号第5条</td><td>以信息不存在为由答复的，应当举证证明已尽<b>合理检索义务</b>（检索范围、方式、结果的合理性）</td></tr>
+<tr><td>渝府办发〔2020〕70号</td><td>应<b>留存检索过程及结果记录等证据</b>；归档清单含"文件查阅和借阅记录"</td></tr>
+<tr><td>指导案例101号（罗元昌案）</td><td>仅自述"查无"而无检索证据→不予支持；<b>申请人提供线索后举证责任转移给行政机关</b></td></tr>
+<tr><td>张良诉上海市规土局案</td><td>仅按申请人字面表述检索、检索方式失当＝<b>未尽检索义务</b></td></tr>
+</table></div>
+
+<div class="card"><h2>二、检索范围：载体全覆盖（八类，缺一即不充分）</h2>
+<p style="font-size:13px;color:#555;line-height:1.9">检索不是"在电脑里搜一下"，而是对本机关全部可能保存该信息的载体逐一排查。以下八类载体按实际保存情况全部检索并留痕：</p>
+<table class="rule"><tr><th style="width:22%">载体</th><th>检索内容</th><th style="width:34%">留痕方式</th></tr>
+<tr><td>① 档案室纸质档案</td><td>文书档案、业务档案、项目档案（先查案卷目录/全引目录/专题目录，再按档号调卷）</td><td>《档案查阅登记表》、调卷单、档案管理员确认</td></tr>
+<tr><td>② 电子档案管理系统</td><td>目录著录项＋扫描件全文（有文字层的可全文检索）</td><td>检索日志导出／检索页面截图</td></tr>
+<tr><td>③ 公文办理系统</td><td><b>收发文登记、办文单、审批流转记录</b>（证明"办没办过"的关键载体）</td><td>系统截图／登记簿复印件</td></tr>
+<tr><td>④ OA办公系统</td><td>电子审批、流转、签报记录</td><td>系统截图</td></tr>
+<tr><td>⑤ 门户网站</td><td>主动公开目录、历史公开内容、政务公开栏目</td><td>页面截图（含网址、时间）</td></tr>
+<tr><td>⑥ 业务台账／专账</td><td>维修资金台账、项目台账、信访台账、值班记录等</td><td>台账页摘录／截图</td></tr>
+<tr><td>⑦ 经办人员办公电脑</td><td>个人存储的文件、邮件、聊天记录中相关材料</td><td>文件夹截图（辅助留痕，不能作为唯一载体）</td></tr>
+<tr><td>⑧ 档案数字化覆盖范围</td><td>请档案管理部门书面确认已数字化的门类、年度、起止档号</td><td>《数字化覆盖范围说明》（未数字化的部分须补纸质翻检）</td></tr>
+</table>
+<div class="warn"><b>只检索办公电脑＝检索不充分。</b>法院审查的是"全部可能载体"，办公电脑只是其一；尤其<b>收发文登记、OA流转</b>是判断"本机关是否办理过该事项"的关键，遗漏即败诉风险。</div></div>
+
+<div class="card"><h2>三、检索方式方法（六法）</h2>
+<table class="rule"><tr><th style="width:22%">方法</th><th>做法</th><th>适用情形</th></tr>
+<tr><td>1. 目录检索法</td><td>先查案卷目录、全引目录、专题目录、电子目录树，按目录定位档号</td><td>纸质档案为主的首选方法，体现"按账找卷"</td></tr>
+<tr><td>2. 关键词检索法</td><td><b>≥2组关键词</b>：名称、文号、档号、主题词、发文机关、成文时间；并扩展同义词、简称、规范名称</td><td>电子系统检索；关键词单一＝检索方式失当（张良案）</td></tr>
+<tr><td>3. 全文检索法</td><td>对含文字层的电子档案、公文全文检索（不只查题名/文号）</td><td>纯图像扫描件无文字层的，须调阅扫描件逐件翻检</td></tr>
+<tr><td>4. 人工翻检法</td><td>凭档号调卷，逐卷逐件翻阅核对；记录调阅档号、翻检起止时间</td><td>目录命中疑似卷、或数字化覆盖不全时</td></tr>
+<tr><td>5. 线索追踪法</td><td>依申请人提供的线索（文件编号、办理时间、经办环节）、收发文登记、会议纪要、台账反查</td><td><b>申请人提供线索后必须补充检索</b>（指导案例101号）</td></tr>
+<tr><td>6. 交叉印证法</td><td>与其他机关、管理系统核对：该信息是否他机关制作/保存、是否已移交档案馆</td><td>判断适用36条(五)告知负责机关，还是档案法办理</td></tr>
+</table></div>
+
+<div class="card"><h2>四、检索七步流程</h2>
+<div class="step-flow">
+<span class="step-box"><b>第1步</b>研判信息特征<br>名称/文号/时间/制作机关</span><span class="step-arrow">→</span>
+<span class="step-box"><b>第2步</b>确定检索范围<br>载体＋年度＋门类</span><span class="step-arrow">→</span>
+<span class="step-box"><b>第3步</b>设计关键词<br>≥2组含同义词</span><span class="step-arrow">→</span>
+<span class="step-box"><b>第4步</b>目录/系统检索<br>逐载体执行并留痕</span><span class="step-arrow">→</span>
+<span class="step-box"><b>第5步</b>调卷翻检<br>未命中时按档号翻检</span><span class="step-arrow">→</span>
+<span class="step-box"><b>第6步</b>结果确认<br>检索人＋档案管理员双签字</span><span class="step-arrow">→</span>
+<span class="step-box"><b>第7步</b>留痕归档→答复<br>记录表随案卷归档</span>
+</div>
+<p class="note">时间要求：<b>第3—5个工作日</b>完成全面检索（20个工作日倒排工期）；全部检索记录形成时间必须早于答复作出之日（行诉法第35条：诉讼中不得自行补充收集证据）。</p></div>
+
+<div class="card"><h2>五、检索记录与留痕要求</h2>
+<h3>（一）《检索记录表》必备要素</h3>
+<table class="rule"><tr><th style="width:26%">要素</th><th>要求</th></tr>
+<tr><td>检索范围</td><td>写明载体名称＋年度＋门类（如"档案室××××—××××年度文书档案"），不得笼统写"已全面检索"</td></tr>
+<tr><td>检索关键词</td><td>≥2组，注明同义词、简称、规范名称</td></tr>
+<tr><td>检索工具/路径</td><td>系统名称、案卷目录/全引目录、检索字段（题名/文号/档号/全文）</td></tr>
+<tr><td>检索人、时间</td><td>具体到人、到日期时间</td></tr>
+<tr><td>检索结果</td><td>查到（档号）/未查到，逐载体记录</td></tr>
+<tr><td>签字确认</td><td>检索人＋档案管理员（或见证人）<b>双签字</b></td></tr>
+</table>
+<h3>（二）截图留痕规范</h3>
+<table class="rule"><tr><th style="width:26%">要素</th><th>要求</th></tr>
+<tr><td>时间</td><td>截图内可见操作时间（系统时间或截图属性时间，两者兼有为佳）</td></tr>
+<tr><td>条件</td><td>检索关键词、字段、范围完整可见，一次截不下的分屏截</td></tr>
+<tr><td>结果</td><td>结果条数或"未检索到"提示必须入镜（<b>空结果也要截图</b>——这正是"不存在"的直接证据）</td></tr>
+<tr><td>系统标识</td><td>系统名称/单位信息尽量入镜，证明系本机关系统</td></tr>
+<tr><td>连续性</td><td>多组关键词分别截图，不合并、不事后补截</td></tr>
+</table>
+<h3>（三）归档</h3>
+<p style="font-size:13px;color:#555;line-height:1.9">《检索记录表》＋查档登记复印件＋系统检索日志/截图＋档案管理员确认书＋（如适用）《数字化覆盖范围说明》，随案卷一并归档（渝府办发〔2020〕70号归档清单）。</p></div>
+
+<div class="card"><h2>六、检索结果与答复类型的对应（关键：不能混用）</h2>
+<table class="rule"><tr><th style="width:38%">检索结论</th><th style="width:24%">答复依据</th><th>答复要点</th></tr>
+<tr><td>信息已主动公开</td><td>《条例》第36条第(一)项</td><td>告知获取方式、途径（网址/查阅地点），核实链接当前有效</td></tr>
+<tr><td>检索到且可以公开</td><td>第36条第(二)项</td><td>提供信息，或告知获取方式、途径和时间</td></tr>
+<tr><td><b>本机关未制作、未获取，检索无果</b></td><td><b>第36条第(四)项</b></td><td>"经检索该政府信息不存在"——<b>须附完整检索证据链</b></td></tr>
+<tr><td>他机关制作/保存、本机关不掌握</td><td>第36条第(五)项</td><td>告知不属于本机关负责公开并说明理由，<b>告知负责机关名称、联系方式</b>——不是"不存在"</td></tr>
+<tr><td>已依法移交档案馆、成为国家档案</td><td>档案法；国办公开办函〔2019〕14号</td><td>告知按档案法规定向档案馆申请查阅</td></tr>
+<tr><td>无现成信息需另行制作/加工分析</td><td>第38条</td><td>除能区分处理的外可以不予提供，说明理由</td></tr>
+<tr><td>数量频次明显超合理范围</td><td>第35、42条；国办函〔2020〕109号</td><td>可要求说明理由/收取信息处理费（不影响先检索）</td></tr>
+</table>
+<div class="warn"><b>(四)与(五)混用＝适用法律错误。</b>"本机关不掌握、在别处保存"只能答(五)并指明保存单位；只有"本机关确实未制作、未获取"才答(四)。对可能由其他机关保存的信息（如维修资金数额核定文件、他单位出具的检测报告），务必先交叉印证确认保存主体。</div></div>
+
+<div class="card"><h2>七、常见错误与败诉风险（对照自查）</h2>
+<table class="rule"><tr><th style="width:6%">序</th><th style="width:44%">错误做法</th><th>后果/正确做法</th></tr>
+<tr><td>1</td><td>只检索办公电脑一个载体</td><td>检索不充分，法院不予支持"不存在"主张；须八类载体全覆盖</td></tr>
+<tr><td>2</td><td>关键词单一、仅按申请人字面表述检索</td><td>检索方式失当（张良案）；须≥2组并扩展同义词、规范名称</td></tr>
+<tr><td>3</td><td>无留痕，或事后补做记录</td><td>行诉法第35条禁止诉讼中补充收集证据；须答复前完成留痕</td></tr>
+<tr><td>4</td><td>申请人提供线索后不补充检索</td><td>线索出现后举证责任转移（指导案例101号）；须针对性补充检索并留痕</td></tr>
+<tr><td>5</td><td>检索范围笼统（"已全面检索"）</td><td>无可核验性；须写明载体、年度、目录、工具</td></tr>
+<tr><td>6</td><td>把"在别处保存"答成"不存在"</td><td>适用法律错误；(四)(五)混用，撤销风险</td></tr>
+<tr><td>7</td><td>程序发生过却说"没有处理记录"</td><td>与收发文登记、台账矛盾；须查明"未承办/仅转报"并附事实证据</td></tr>
+<tr><td>8</td><td>已公开信息不告知获取途径</td><td>应答36条(一)；附网址/查阅地点并核实有效</td></tr>
+</table></div>
+
+<div class="card"><h2>八、关键词设计参考模板</h2>
+<table class="rule"><tr><th style="width:34%">申请指向信息类型</th><th>关键词组示例（≥2组，可组合使用）</th></tr>
+<tr><td>小区/项目名称类</td><td>小区全名＋简称；项目名称＋文号；开发/物业企业名称</td></tr>
+<tr><td>消防/安全整改类</td><td>"消防""消防设施""整改""安全检查""诊断""大修"＋小区名；检测机构名称</td></tr>
+<tr><td>维修资金类</td><td>"维修资金""物业专项维修资金""应急""紧急程序""列支""划转"＋小区名</td></tr>
+<tr><td>预算/造价类</td><td>"预算""造价""审核""咨询公司名称"＋项目名；"预算审核报告"</td></tr>
+<tr><td>批复/许可类</td><td>文号（含年份）、"批复""同意""备案"＋事项关键词；发文机关＋成文时间</td></tr>
+<tr><td>历史信息类</td><td>年度＋事项；会议纪要/请示报告关键词；档案目录中的主题词</td></tr>
+</table>
+<div class="okbox"><b>标准做法示例</b>：申请公开"××小区消防设施设备大修预算审核报告"→关键词组①"××小区（含简称）＋预算审核"；②"消防设施＋大修"；③"造价咨询公司名称"；④"维修资金＋应急"。逐组在八类载体检索并分别截图留痕。</div></div>
+
+</div></main></div>
+<footer class="footer"><div class="f-title">政府信息公开事项机关处理指引</div>依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制 · 全部法条均引自官方公开发布原文<br>内部工作指引 · 供两江新区各机关政府信息公开工作人员使用 · 可离线运行</footer>
+<a href="staff/index.html" class="ver-fab"><span class="ic">👥</span>工作人员速查版</a>
+</body>
+</html>
