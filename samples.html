@@ -25,6 +25,29 @@
 .sec-title { background: #14375a; color: #fff; border-radius: 10px; padding: 12px 20px; font-size: 17px; font-weight: 700; margin: 26px 0 14px; }
 .sec-title small { font-weight: 400; opacity: .85; font-size: 12px; margin-left: 8px; }
 @media (max-width: 640px) { .doc-body { padding: 14px 14px 18px; } }
+
+/* ===== 文书索引栏 ===== */
+.doc-index { background: #fff; border: 1px solid #e2e8ef; border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(12,36,64,.05); }
+.doc-index-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #eef1f5; }
+.doc-index-title { font-size: 16px; font-weight: 700; color: #14375a; }
+.doc-index-count { font-size: 12px; color: #8a97a5; background: #eef4fb; border-radius: 12px; padding: 2px 12px; }
+.doc-index-groups { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.doc-index-group { background: #f8fafc; border: 1px solid #e2e8ef; border-radius: 10px; padding: 14px 16px; }
+.doc-index-gtitle { font-size: 14px; font-weight: 700; color: #14375a; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #d0d9e3; }
+.doc-index-gtitle a { color: #14375a; text-decoration: none; }
+.doc-index-gtitle a:hover { color: #1d4e7d; text-decoration: underline; }
+.doc-index-sub { font-size: 12px; font-weight: 700; color: #c9a25a; margin: 8px 0 4px; }
+.doc-index-items { display: flex; flex-wrap: wrap; gap: 6px; }
+.doc-index-items a { background: #fff; border: 1px solid #d0d9e3; color: #1d4e7d; border-radius: 14px; padding: 3px 10px; font-size: 12px; text-decoration: none; transition: all .15s; }
+.doc-index-items a:hover { background: #14375a; color: #fff; border-color: #14375a; }
+.doc-index-sticky { position: sticky; top: 0; z-index: 50; }
+@media (max-width: 900px) { .doc-index-groups { grid-template-columns: 1fr; } }
+
+.idx-back { position: fixed; right: 22px; bottom: 90px; background: #14375a; color: #fff; border: none; border-radius: 30px; padding: 10px 18px; font-size: 13px; cursor: pointer; box-shadow: 0 4px 14px rgba(12,36,64,.25); opacity: 0; pointer-events: none; transition: all .3s; z-index: 60; }
+.idx-back.show { opacity: 1; pointer-events: auto; }
+.idx-back:hover { background: #1d4e7d; transform: translateY(-2px); }
+.doc-index-sticky { position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 14px rgba(12,36,64,.12); }
+@media (max-width: 640px) { .idx-back { right: 14px; bottom: 100px; } }
 </style>
 <style>/* 统一设计覆盖：将各页内联旧配色对齐统一设计系统 */
 .card{border-radius:12px;border:1px solid #e2e8ef}
@@ -45,6 +68,75 @@ table.rule th{background:#14375a}
 <div class="topbar"><div class="topbar-inner"><a href="index.html" class="brand"><span class="logo">政</span><span class="name">政府信息公开事项机关处理指引<small>两江新区 · 基层实操版</small></span></a><nav class="topnav"><a href="index.html">首页</a><a href="guide.html">办理指引</a><a href="samples.html" class="active">文书范文</a><a href="decision-wizard.html">决策向导</a><a href="tools.html">文书生成器</a><a href="faq.html">常见问题</a><a href="defense-guide.html">复议诉讼</a><a href="reply-guide.html#laws-appendix">相关法律规定</a><a href="index.html#laws">法律法规</a></nav><button class="menu-btn" onclick="document.querySelector('.topnav').classList.toggle('open')">☰</button></div>
 </div>
 <div class="layout"><aside class="sidebar"><div class="side-title">目 录 · 机关处理指引</div><div class="grp">壹 · 办理流程</div><a href="guide.html"><span class="ic">01</span>简明办理指引</a><a href="reply-guide.html"><span class="ic">02</span>完整条文版指引 · 相关法律规定</a><div class="grp">贰 · 文书与工具</div><a href="decision-wizard.html"><span class="ic">🧭</span>答复决策向导</a><a href="samples.html" class="active"><span class="ic">03</span>答复文书范文库</a><a href="calculator.html"><span class="ic">04</span>答复时限计算器</a><a href="tools.html"><span class="ic">05</span>政府信息公开文书自动生成器和风险自查</a><div class="grp">叁 · 常见问题</div><a href="faq.html"><span class="ic">06</span>常见问题库</a><div class="grp">肆 · 复议诉讼</div><a href="defense-guide.html"><span class="ic">07</span>分类应诉方案</a><div class="grp">陆 · 法规附录</div><a href="index.html#laws"><span class="ic">08</span>法律法规库</a></aside><main class="main"><div class="wrap"><div class="head"><h1>答复文书范文库 · 26种格式文书</h1><p>本库以国务院办公厅政府信息与政务公开办公室转发《江苏省政府信息公开申请办理答复规范》（国办公开办函〔2020〕2号）所附<b>26种格式文书</b>为基准，逐份照录其格式与表述（【】内为填写项）；另附本规范未列、依据其他现行规定必需的补充文书。说明：① 规范格式文书中的救济告知依2020年文本统一为"60日内申请行政复议或者6个月内提起诉讼"；依2024年1月1日施行的《行政复议法》第23条第(四)项，<b>不予公开类答复（含部分公开中的不予公开部分）属复议前置</b>，本库已对该类文书按现行法调整为前置告知，其余类保留规范原文告知；② 答复书必备要素：标题、文号、申请人姓名（名称）、申请事实、法律依据、处理决定、复议诉讼权利和期限、答复主体、答复日期及印章；③ 法律适用须区分"条""款""项"，引用的条文须与处理决定一致；④ 提供形式依申请人要求（纸质/电子文档等，不包括"盖骑缝章""每页加盖印章"等形式），当面提供、邮政寄送或电子发送；⑤ 所有文书均须经合法性审核并留档；⑥ 全文依据见<a href="index.html#laws">法律法规库</a>。</p></div><div class="nav-links"><a href="index.html">← 返回首页</a><a href="#sec1">壹 · 程序处理文书（7种）</a><a href="#sec2">贰 · 实体处理文书（19种）</a><a href="#sec3">叁 · 补充文书（5类）</a><a href="reply-guide.html">办理指引</a></div>
+
+
+<div class="doc-index" id="docIndex">
+  <div class="doc-index-head">
+    <span class="doc-index-title">📑 文书索引 · 快速定位</span>
+    <span class="doc-index-count">共 31 份（程序 7 + 实体 19 + 补充 5）</span>
+  </div>
+  <div class="doc-index-groups">
+    <div class="doc-index-group">
+      <div class="doc-index-gtitle"><a href="#sec1">壹 · 程序处理文书（7种）</a></div>
+      <div class="doc-index-items">
+        <a href="#p1">① 接受回执</a>
+        <a href="#p2">② 补正告知书</a>
+        <a href="#p3">③ 延期答复告知书</a>
+        <a href="#p4">④ 征求第三方意见（给第三方）</a>
+        <a href="#p5">⑤ 征求第三方意见（给申请人）</a>
+        <a href="#p6">⑥ 第三方告知书（给第三方）</a>
+        <a href="#p7">⑦ 征求意见函（共同制作）</a>
+      </div>
+    </div>
+    <div class="doc-index-group">
+      <div class="doc-index-gtitle"><a href="#sec2">贰 · 实体处理文书（19种）</a></div>
+      <div class="doc-index-sub">予以公开（3）</div>
+      <div class="doc-index-items">
+        <a href="#e1">⑧ 已对外公开</a>
+        <a href="#e2">⑨ 答复回执</a>
+        <a href="#e3">⑩ 近期内公开</a>
+      </div>
+      <div class="doc-index-sub">不予公开（8）</div>
+      <div class="doc-index-items">
+        <a href="#e4">⑪ 国家秘密</a>
+        <a href="#e5">⑫ 法定禁止</a>
+        <a href="#e6">⑬ 三安全一稳定</a>
+        <a href="#e7">⑭ 第三方权益</a>
+        <a href="#e8">⑮ 内部事务</a>
+        <a href="#e9">⑯ 过程性信息</a>
+        <a href="#e10">⑰ 执法案卷</a>
+        <a href="#e11">⑱ 行政查询</a>
+      </div>
+      <div class="doc-index-sub">无法提供（3）</div>
+      <div class="doc-index-items">
+        <a href="#e12">⑲ 不掌握/不存在</a>
+        <a href="#e13">⑳ 需另行制作</a>
+        <a href="#e14">㉑ 补正后不明确</a>
+      </div>
+      <div class="doc-index-sub">不予处理（4）</div>
+      <div class="doc-index-items">
+        <a href="#e15">㉒ 信访投诉举报</a>
+        <a href="#e16">㉓ 重复申请</a>
+        <a href="#e17">㉔ 公开出版物</a>
+        <a href="#e18">㉕ 确认/重新出具</a>
+      </div>
+      <div class="doc-index-sub">其他（1）</div>
+      <div class="doc-index-items">
+        <a href="#e19">㉖ 党务信息</a>
+      </div>
+    </div>
+    <div class="doc-index-group">
+      <div class="doc-index-gtitle"><a href="#sec3">叁 · 补充文书（5类）</a></div>
+      <div class="doc-index-items">
+        <a href="#c1">补充1 已移交档案馆</a>
+        <a href="#c2">补充2 部分公开</a>
+        <a href="#c3">补充3 信息处理费通知</a>
+        <a href="#c4">补充4 更正记录</a>
+        <a href="#c5">补充5 送达回证</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="sec-title" id="sec1">壹 · 程序处理文书 <small>国办公开办函〔2020〕2号附件 · 格式文书第1—7号</small></div>
 
@@ -456,10 +548,34 @@ table.rule th{background:#14375a}
   try { document.execCommand('copy'); btn.textContent = '已复制 ✓'; setTimeout(() =>btn.textContent = '复制', 1500); } catch(e) { btn.textContent = '复制失败'; }
   sel.removeAllRanges();
 }
+
+// ===== 索引栏吸顶与返回按钮 =====
+const docIndex = document.getElementById('docIndex');
+const idxBack = document.getElementById('idxBack');
+const indexTop = docIndex ? docIndex.offsetTop : 0;
+window.addEventListener('scroll', function() {
+  if (!docIndex) return;
+  if (window.scrollY > indexTop + 60) {
+    docIndex.classList.add('doc-index-sticky');
+    if (idxBack) idxBack.classList.add('show');
+  } else {
+    docIndex.classList.remove('doc-index-sticky');
+    if (idxBack) idxBack.classList.remove('show');
+  }
+});
+function scrollToIndex() {
+  const idx = document.getElementById('docIndex');
+  if (idx) {
+    idx.classList.remove('doc-index-sticky');
+    window.scrollTo({ top: idx.offsetTop - 10, behavior: 'smooth' });
+  }
+}
+
 </script>
 </main>
 </div>
 <footer class="footer"><div class="f-title">政府信息公开事项机关处理指引</div>依据《中华人民共和国政府信息公开条例》（国务院令第711号）及配套现行有效规定编制 · 全部法条均引自官方公开发布原文<br>内部工作指引 · 供两江新区各机关政府信息公开工作人员使用 · 可离线运行
+<button class="idx-back" id="idxBack" onclick="scrollToIndex()" title="返回文书索引">📑 索引</button>
 </footer>
 <a href="staff/index.html" class="ver-fab"><span class="ic">👥</span>工作人员速查版</a>
 </body>
