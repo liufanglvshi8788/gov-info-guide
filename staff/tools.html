@@ -20,6 +20,10 @@
 .opt:hover { border-color: var(--primary-light); }
 .opt.selected { border-color: var(--primary); background: #eef4fa; font-weight: 700; }
 .concl { background: #eaf6f1; border-left: 4px solid var(--success); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-top: 12px; font-size: 13.5px; line-height: 2; display: none; }
+
+.nav-links { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.nav-links a { background: #eaf2f8; color: #1a5276; padding: 5px 12px; border-radius: 15px; font-size: 12.5px; text-decoration: none; }
+.nav-links a:hover { background: #d4e6f1; }
 </style>
 </head>
 <body>
@@ -42,7 +46,9 @@
   </div>
 </div>
 <div class="staff-wrap">
-  <div class="staff-hero">
+  
+<div class="nav-links" style="max-width:1000px;margin:0 auto;padding:16px 16px 0"><a href="index.html">← 返回工作人员首页</a><a href="../index.html">⚖ 法律顾问完整版</a></div>
+<div class="staff-hero">
     <h1>答复时限计算器</h1>
     <p>输入收件日期自动算届满日；按实际情况逐题选择，自动给出答复类型与依据。</p>
   </div>
