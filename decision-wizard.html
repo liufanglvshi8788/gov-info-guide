@@ -27,6 +27,8 @@
 .concl.show { display: block; }
 .concl b { color:#1e8449; }
 .restart { background: #14375a; color: #fff; border: none; border-radius: 6px; padding: 9px 20px; font-size: 13px; cursor: pointer; margin-top: 10px; }
+.back { background: #7f8c8d; color: #fff; border: none; border-radius: 6px; padding: 9px 20px; font-size: 13px; cursor: pointer; margin-top: 10px; margin-right: 8px; }
+.back:hover { background: #95a5a6; }
 .restart:hover { background:#1d4e7d; }
 .progress { font-size:12px; color:#8a97a5; margin-bottom:10px; }
 /* ===== 配套可打印文书模板（原程序文书模板页融合）===== */
@@ -81,7 +83,7 @@ table.tpl td.label { background: #f7f9fb; width: 18%; text-align: center; font-w
     <div class="sub">从"申请内容是否明确"起，依次作答；每题点击对应选项进入下一步。</div>
     <div class="progress" id="prog"></div>
     <div id="tree"></div>
-    <button class="restart" onclick="resetTree()">↺ 重新开始</button>
+    <div class="wiz-nav"><button class="back" id="backBtn" onclick="backTree()" style="display:none">← 上一步</button><button class="restart" onclick="resetTree()">↺ 重新开始</button></div>
   </div>
 
   <!-- ===== 配套可打印文书模板（融合自原"程序文书模板"页）===== -->
@@ -151,8 +153,11 @@ const CONCL = {
   '予以公开': { t: '予以公开', p: '根据《中华人民共和国政府信息公开条例》第三十六条第（二）项，所申请公开信息可以公开的，向申请人提供该政府信息，或者告知申请人获取该政府信息的方式、途径和时间。', d: '向申请人提供该政府信息，或告知获取方式、途径和时间（条例第36条(二)）；提供形式按申请人要求（第40条）。', s: 'samples.html#e2', hint: '' }
 };
 let cur = 0;
+const hist = []; // 选择历史栈（记录每题作答前的位置，支持"上一步"逐题回退）
 function renderTree() {
   const box = document.getElementById('tree');
+  const backBtn = document.getElementById('backBtn');
+  if (backBtn) backBtn.style.display = (typeof cur === 'string' || hist.length > 0) ? 'inline-block' : 'none';
   const prog = document.getElementById('prog');
   if (typeof cur === 'string') {
     const c = CONCL[cur.replace('r:', '')];
@@ -164,8 +169,9 @@ function renderTree() {
   prog.textContent = '第 ' + (cur + 1) + ' / 9 步';
   box.innerHTML = '<div class="step"><div class="qtext">' + s.q + '</div>' + (s.hint ? '<div class="hint">' + s.hint + '</div>' : '') + '<div class="opts">' + s.opts.map(o => '<button class="opt" onclick="pick(\'' + o + '\')">' + o + '</button>').join('') + '</div></div>';
 }
-function pick(o) { cur = QS[cur].next[o]; renderTree(); }
-function resetTree() { cur = 0; renderTree(); }
+function pick(o) { hist.push(cur); cur = QS[cur].next[o]; renderTree(); }
+function backTree() { if (hist.length > 0) { cur = hist.pop(); renderTree(); } }
+function resetTree() { hist.length = 0; cur = 0; renderTree(); }
 renderTree();
 </script>
 </body>
